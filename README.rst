@@ -18,8 +18,8 @@ sandpiper
     :alt: Join the chat at https://gitter.im/bird-house/birdhouse
 
 
-sandpiper (the bird)
-  *sandpiper is a bird ...*
+Sandpiper (the bird)
+  *A large family of waders or shorebirds. They include many species called sandpipers, as well as those called by names such as curlew and snipe. The majority of these species eat small invertebrates picked out of the mud or soil.*
 
 A Web Processing Service for the Plan2Adapt Rule Engine.
 
