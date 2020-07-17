@@ -1,0 +1,23 @@
+version: '2.1'
+services:
+  sandpiper:
+    image: ${SANDPIPER_IMAGE}
+    container_name: sandpiper
+    environment:
+      - PYWPS_CFG=/wps.cfg
+    ports:
+      - "8101:5003"
+    volumes:
+      - ../../sandpiper/pavics-component/wps.cfg:/wps.cfg
+      - wps_outputs:/data/wpsoutputs
+      - /tmp
+    restart: always
+
+  magpie:
+    volumes:
+    - ../../sandpiper/pavics-component/sandpiper-magpie-permission.cfg:/opt/local/src/magpie/config/permissions/sandpiper-magpie-permission.cfg:ro
+    - ../../sandpiper/pavics-component/sandpiper-magpie-provider.cfg:/opt/local/src/magpie/config/providers/sandpiper-magpie-provider.cfg:ro
+
+  proxy:
+    volumes:
+      - ../../sandpiper/pavics-component/sandpiper_canarie_api_monitoring.py:${CANARIE_MONITORING_EXTRA_CONF_DIR}/sandpiper_canarie_api_monitoring.py:ro

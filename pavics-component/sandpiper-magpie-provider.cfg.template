@@ -1,0 +1,8 @@
+providers:
+  sandpiper:
+    url: http://${PAVICS_FQDN}:8101/wps
+    title: sandpiper
+    public: true
+    c4i: false
+    type: wps
+    sync_type: wps

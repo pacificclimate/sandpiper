@@ -1,0 +1,15 @@
+permissions:
+  - service: sandpiper
+    permission: getcapabilities
+    group: anonymous
+    action: create
+
+  - service: sandpiper
+    permission: describeprocess
+    group: anonymous
+    action: create
+
+  - service: sandpiper
+    permission: execute
+    group: anonymous
+    action: create
