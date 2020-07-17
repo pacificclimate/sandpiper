@@ -31,14 +31,15 @@ Running tests
 
 Run tests using pytest_.
 
-First activate the ``sandpiper`` Conda environment and install ``pytest``.
+First activate the ``sandpiper`` Python environment and install ``pytest``.
 
 .. code-block:: console
 
-   $ source activate sandpiper
-   $ pip install -r requirements_dev.txt  # if not already installed
+   $ python3 -m venv venv
+   $ source venv/bin/activate
+   (venv)$ pip install -r requirements_dev.txt # if not already installed
    OR
-   $ make develop
+   (venv)$ make develop
 
 Run quick tests (skip slow and online):
 
@@ -52,11 +53,11 @@ Run all tests:
 
     $ pytest
 
-Check pep8:
+Check black:
 
 .. code-block:: console
 
-    $ flake8
+    $ black .
 
 Run tests the lazy way
 ----------------------
@@ -68,24 +69,7 @@ Do the same as above using the ``Makefile``.
     $ make test
     $ make test-all
     $ make lint
-
-Prepare a release
------------------
-
-Update the Conda specification file to build identical environments_ on a specific OS.
-
-.. note:: You should run this on your target OS, in our case Linux.
-
-.. code-block:: console
-
-  $ conda env create -f environment.yml
-  $ source activate sandpiper
-  $ make clean
-  $ make install
-  $ conda list -n sandpiper --explicit > spec-file.txt
-
-.. _environments: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#building-identical-conda-environments
-
+    
 
 Bump a new version
 ------------------

@@ -24,18 +24,24 @@ Check out code from the sandpiper GitHub repo and start the installation:
    $ git clone https://github.com/nikola-rados/sandpiper.git
    $ cd sandpiper
 
-Create Conda environment named `sandpiper`:
+Create Python environment named `venv`:
 
 .. code-block:: console
 
-   $ conda env create -f environment.yml
-   $ source activate sandpiper
+   $ python3 -m venv venv
+   $ source venv/bin/activate
+
+Install requirements:
+
+.. code-block:: console
+
+   (venv)$ pip install -r requirements.txt
 
 Install sandpiper app:
 
 .. code-block:: console
 
-  $ pip install -e .
+  (venv)$ pip install -e .
   OR
   make install
 
@@ -43,7 +49,7 @@ For development you can use this command:
 
 .. code-block:: console
 
-  $ pip install -e .[dev]
+  (venv)$ pip install -e .[dev]
   OR
   $ make develop
 
@@ -54,12 +60,12 @@ After successful installation you can start the service using the ``sandpiper`` 
 
 .. code-block:: console
 
-   $ sandpiper --help # show help
-   $ sandpiper start  # start service with default configuration
+   (venv)$ sandpiper --help # show help
+   (venv)$ sandpiper start  # start service with default configuration
 
    OR
 
-   $ sandpiper start --daemon # start service as daemon
+   (venv)$ sandpiper start --daemon # start service as daemon
    loading configuration
    forked process id: 42
 
@@ -100,9 +106,12 @@ Run sandpiper as Docker container
 
 You can also run sandpiper as a Docker container.
 
-.. warning::
+.. code-block:: console
 
-  TODO: Describe Docker container support.
+  $ docker-compose build
+  $ docker-compose up
+
+sandpiper will be available on port 8101.
 
 Use Ansible to deploy sandpiper on your System
 ----------------------------------------------
