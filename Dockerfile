@@ -1,33 +1,28 @@
-# vim:set ft=dockerfile:
-FROM continuumio/miniconda3
-MAINTAINER https://github.com/nikola-rados/sandpiper
-LABEL Description="sandpiper WPS" Vendor="Birdhouse" Version="0.1.0"
+FROM python:3.7-slim
 
-# Update Debian system
+MAINTAINER https://github.com/pacificclimate/sandpiper
+LABEL Description="sandpiper WPS" Vendor="pacificclimate" Version="0.1.0"
+
+ENV PIP_INDEX_URL="https://pypi.pacificclimate.org/simple/"
+
 RUN apt-get update && apt-get install -y \
- build-essential \
-&& rm -rf /var/lib/apt/lists/*
+    build-essential
 
-# Update conda
-RUN conda update -n base conda
+WORKDIR /code
 
-# Copy WPS project
-COPY . /opt/wps
+COPY requirements.txt ./
 
-WORKDIR /opt/wps
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install gunicorn
 
-# Create conda environment with PyWPS
-RUN ["conda", "env", "create", "-n", "wps", "-f", "environment.yml"]
+COPY . .
 
-# Install WPS
-RUN ["/bin/bash", "-c", "source activate wps && python setup.py install"]
+EXPOSE 5002
 
-# Start WPS service on port 5003 on 0.0.0.0
-EXPOSE 5003
-ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["source activate wps && exec sandpiper start -b 0.0.0.0 -c /opt/wps/etc/demo.cfg"]
+CMD ["gunicorn", "--bind=0.0.0.0:5003", "sandpiper.wsgi:application"]
 
-# docker build -t nikola-rados/sandpiper .
-# docker run -p 5003:5003 nikola-rados/sandpiper
+# docker build -t pacificclimate/sandpiper .
+# docker run -p 5003:5003 pacificclimate/sandpiper
 # http://localhost:5003/wps?request=GetCapabilities&service=WPS
 # http://localhost:5003/wps?request=DescribeProcess&service=WPS&identifier=all&version=1.0.0

@@ -2,9 +2,9 @@ version: '3'
 services:
   wps:
     build: .
-    image: nikola-rados/sandpiper
+    image: pcic/sandpiper
     ports:
-      - "5003:5003"
+      - "8101:5003"
 
 
 # docker-compose build
