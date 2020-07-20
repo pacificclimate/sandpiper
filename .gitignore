@@ -1,2 +1,5 @@
 venv/
 *.egg*
+*.pyc
+*.log
+*.sqlite
