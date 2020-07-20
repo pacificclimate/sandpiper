@@ -2,12 +2,100 @@ from pywps import Process, LiteralInput, ComplexInput, LiteralOutput, UOM, Forma
 from pywps.app.Common import Metadata
 import csv
 import json
-from p2a_impacts.resolver import resolve_rules
-
 import logging
+import requests
+from p2a_impacts.resolver import resolve_rules
 
 
 LOGGER = logging.getLogger("PYWPS")
+
+
+regions = {
+    "bc": "British Columbia",
+    "alberni_clayoquot": "Alberni-Clayoquot",
+    "boreal_plains": "Boreal Plains",
+    "bulkley_nechako": "Bulkley-Nechako",
+    "capital": "Capital",
+    "cariboo": "Cariboo",
+    "central_coast": "Central Coast",
+    "central_kootenay": "Central Kootenay",
+    "central_okanagan": "Central Okanagan",
+    "columbia_shuswap": "Columbia-Shuswap",
+    "comox_valley": "Comox Valley",
+    "cowichan_valley": "Cowichan Valley",
+    "east_kootenay": "East Kootenay",
+    "fraser_fort_george": "Fraser-Fort George",
+    "fraser_valley": "Fraser Valley",
+    "greater_vancouver": "Greater Vancouver",
+    "kitimat_stikine": "Kitimat-Stikine",
+    "kootenay_boundary": "Kootenay Boundary",
+    "mt_waddington": "Mount Waddington",
+    "nanaimo": "Nanaimo",
+    "northern_rockies": "Northern Rockies",
+    "north_okanagan": "North Okanagan",
+    "okanagan_similkameen": "Okanagan-Similkameen",
+    "peace_river": "Peace River",
+    "powell_river": "Powell River",
+    "skeena_queen_charlotte": "Skeena-Queen Charlotte",
+    "squamish_lillooet": "Squamish-Lillooet",
+    "stikine": "Stikine",
+    "strathcona": "Strathcona",
+    "sunshine_coast": "Sunshine Coast",
+    "thompson_nicola": "Thompson-Nicola",
+    "interior": "Interior",
+    "northern": "Northern",
+    "vancouver_coast": "Vancouver Coast",
+    "vancouver_fraser": "Vancouver Fraser",
+    "vancouver_island": "Vancouver Island",
+    "central_interior": "Central Interior",
+    "coast_and_mountains": "Coast and Mountains",
+    "georgia_depression": "Georgia Depression",
+    "northern_boreal_mountains": "Northern Boreal Mountains",
+    "southern_interior": "Southern Interior",
+    "southern_interior_mountains": "Southern Interior Mountains",
+    "sub_boreal_mountains": "Sub Boreal Mountains",
+    "taiga_plains": "Taiga Plains",
+    "cariboo": "Cariboo",
+    "kootenay_/_boundary": "Kootenay / Boundary",
+    "northeast": "Northeast",
+    "omineca": "Omineca",
+    "skeena": "Skeena",
+    "south_coast": "South Coast",
+    "thompson_okanagan": "Thompson / Okanagan",
+    "west_coast": "West Coast",
+}
+
+
+def get_region(region_name, url):
+    """Given a region name and URL retrieve a csv row from Geoserver
+       The region_name variable should be a selection from the regions
+       dictionary object.  This object contains all the options available in
+       Geoserver.
+       The URL in the default case is for the Geoserver instance running on
+       docker-dev01.
+       The return value from this method is a csv row output from
+       Geoserver.  The row contains several columns but the ones used are
+       coast_bool and WKT.  These contain whether or not the region is coastal
+       and the polygon describing the region respectively.
+    """
+    params = {
+        "service": "WFS",
+        "version": "1.0.0",
+        "request": "GetFeature",
+        "typename": "bc_regions:bc-regions-polygon",
+        "maxFeatures": "100",
+        "outputFormat": "csv",
+    }
+    data = requests.get(url, params=params)
+
+    decoded_data = data.content.decode("utf-8")
+    csv_data = csv.DictReader(decoded_data.splitlines(), delimiter=",")
+
+    region = regions[region_name]
+
+    for row in csv_data:
+        if row["english_na"] == region:
+            return row
 
 
 class ResolveRules(Process):
@@ -15,13 +103,21 @@ class ResolveRules(Process):
 
     def __init__(self):
         inputs = [
-            ComplexInput(
+            # ComplexInput(
+            #     "csv",
+            #     "CSV ruleset",
+            #     abstract="CSV file",
+            #     min_occurs=1,
+            #     max_occurs=1,
+            #     supported_formats=[Format("text/csv"),],
+            # ),
+            LiteralInput(
                 "csv",
-                "CSV ruleset",
-                abstract="CSV file",
+                "CSV path",
+                abstract="Path to CSV file",
                 min_occurs=1,
                 max_occurs=1,
-                supported_formats=[Format('text/csv'),],
+                data_type="string",
             ),
             LiteralInput(
                 "date_range",
@@ -51,12 +147,21 @@ class ResolveRules(Process):
                 data_type="string",
             ),
             LiteralInput(
+                "connection_string",
+                "Connection String",
+                abstract="Database connection string",
+                min_occurs=1,
+                max_occurs=1,
+                default="postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta",
+                data_type="string",
+            ),
+            LiteralInput(
                 "ensemble",
                 "Ensemble",
                 abstract="Ensemble name filter for data files",
                 min_occurs=1,
                 max_occurs=1,
-                default="p2a_files",
+                default="p2a_rules",
                 data_type="string",
             ),
             LiteralInput(
@@ -98,23 +203,16 @@ class ResolveRules(Process):
             status_supported=True,
         )
 
-
     @staticmethod
     def _handler(request, response):
-        LOGGER.info("say hello")
-        output_args(request)
-        response.outputs["output"].data = "Hello " + request.inputs["name"][0].data
-        response.outputs["output"].uom = UOM("unity")
+        rules, date_range, region, geoserver, connection_string, ensemble, log_level = [
+            input[0].data for input in request.inputs.values()
+        ]
+
+        region = get_region(region, geoserver)
+        resolved = resolve_rules(
+            rules, date_range, region, ensemble, connection_string, log_level
+        )
+        print(resolved)
+        response.outputs["output"].data = "Hello"
         return response
-
-def output_args(request):
-    args = []
-    args.append(request.inputs["csv"][0].data)
-    args.append(request.inputs["date_range"][0].data)
-    args.append(request.inputs["region"][0].data)
-    args.append(request.inputs["geoserver"][0].data)
-    args.append(request.inputs["ensemble"][0].data)
-    args.append(request.inputs["log_level"][0].data)
-
-    for arg in args:
-        print(arg)
