@@ -1,9 +1,11 @@
-from pywps import Process, LiteralInput, ComplexInput, LiteralOutput, UOM, Format
+from pywps import Process, LiteralInput, ComplexOutput, FORMATS
 from pywps.app.Common import Metadata
 import csv
 import json
 import logging
 import requests
+import os
+from decimal import Decimal
 from p2a_impacts.resolver import resolve_rules
 
 
@@ -103,14 +105,6 @@ class ResolveRules(Process):
 
     def __init__(self):
         inputs = [
-            # ComplexInput(
-            #     "csv",
-            #     "CSV ruleset",
-            #     abstract="CSV file",
-            #     min_occurs=1,
-            #     max_occurs=1,
-            #     supported_formats=[Format("text/csv"),],
-            # ),
             LiteralInput(
                 "csv",
                 "CSV path",
@@ -176,12 +170,11 @@ class ResolveRules(Process):
             ),
         ]
         outputs = [
-            LiteralOutput(
-                "output",
-                "Output response",
-                abstract="A friendly Hello from us.",
-                keywords=["output", "result", "response"],
-                data_type="string",
+            ComplexOutput(
+                "json",
+                "JSON Output",
+                abstract="JSON file",
+                supported_formats=[FORMATS.JSON],
             )
         ]
 
@@ -203,8 +196,7 @@ class ResolveRules(Process):
             status_supported=True,
         )
 
-    @staticmethod
-    def _handler(request, response):
+    def _handler(self, request, response):
         rules, date_range, region, geoserver, connection_string, ensemble, log_level = [
             input[0].data for input in request.inputs.values()
         ]
@@ -213,6 +205,15 @@ class ResolveRules(Process):
         resolved = resolve_rules(
             rules, date_range, region, ensemble, connection_string, log_level
         )
-        print(resolved)
-        response.outputs["output"].data = "Hello"
+
+        # Clean output before sending off
+        for target in [key for key, value in resolved.items() if type(value) == Decimal]:
+            resolved.update({target: str(resolved[target])})
+
+        # Create output
+        filepath = os.path.join(self.workdir, "resolved.json")
+        with open(filepath, "w") as f:
+            json.dump(resolved, f)
+
+        response.outputs["json"].file = filepath
         return response
