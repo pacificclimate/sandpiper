@@ -120,7 +120,9 @@ class ResolveRules(Process):
         )
 
         # Clean output before sending off
-        for target in [key for key, value in resolved.items() if type(value) == Decimal]:
+        for target in [
+            key for key, value in resolved.items() if type(value) == Decimal
+        ]:
             resolved.update({target: str(resolved[target])})
 
         # Create output
