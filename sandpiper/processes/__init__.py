@@ -1,5 +1,5 @@
-from .wps_say_hello import SayHello
+from .wps_resolve_rules import ResolveRules
 
 processes = [
-    SayHello(),
+    ResolveRules(),
 ]

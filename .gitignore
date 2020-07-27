@@ -1,2 +1,6 @@
 venv/
 *.egg*
+*.pyc
+*.log
+*.sqlite
+.ipynb_checkpoints/
