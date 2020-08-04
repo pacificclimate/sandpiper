@@ -14,8 +14,9 @@ RUN pip3 install sphinx && \
     pip3 install gunicorn && \
     # These lines combat a vulnerability in pyxdg in both python2 and python3
     # https://github.com/advisories/GHSA-r6v3-hpxj-r8rv
-    pip3 install pyxdg==0.26 && \
-    pip install pyxdg==0.26
+    apt -y remove python-xdg \
+      python3-xdg
+
 
 COPY . .
 
