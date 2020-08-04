@@ -50,7 +50,7 @@ class ResolveRules(Process):
                 abstract="Geoserver URL",
                 min_occurs=1,
                 max_occurs=1,
-                default="http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
+                default="https://docker-dev03.pcic.uvic.ca/geoserver/bc_regions/ows",
                 data_type="string",
             ),
             LiteralInput(
