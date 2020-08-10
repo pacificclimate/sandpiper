@@ -1,0 +1,23 @@
+{
+    "template": "https://github.com/bird-house/cookiecutter-birdhouse",
+    "commit": "f157ea8419fd4e32a9e4d52e613c90c807190e7e",
+    "context": {
+        "cookiecutter": {
+            "full_name": "Nikola Rados",
+            "email": "nrados@uvic.ca",
+            "github_username": "pcic",
+            "project_name": "sandpiper",
+            "project_slug": "sandpiper",
+            "project_repo_name": "sandpiper",
+            "project_readthedocs_name": "sandpiper",
+            "project_short_description": "A Web Processing Service for the Plan2Adapt Rule Engine.",
+            "version": "0.1.0",
+            "open_source_license": "GNU General Public License v3",
+            "http_port": "5003",
+            "_copy_without_render": [
+                "{{cookiecutter.project_slug}}/templates/*.cfg"
+            ],
+            "_template": "https://github.com/bird-house/cookiecutter-birdhouse"
+        }
+    }
+}
