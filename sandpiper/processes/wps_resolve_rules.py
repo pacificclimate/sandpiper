@@ -2,21 +2,25 @@ from pywps import Process, LiteralInput, ComplexOutput, FORMATS
 from pywps.app.Common import Metadata
 import csv
 import json
-import logging
 import requests
 import os
 from decimal import Decimal
 from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
-
-
-LOGGER = logging.getLogger("PYWPS")
+from wps_tools.utils import log_handler
+from wps_tools.io import log_level
 
 
 class ResolveRules(Process):
     """Resolves climatological impacts rules"""
 
     def __init__(self):
+        self.status_percentage_steps = {
+            "start": 0,
+            "process": 10,
+            "build_output": 95,
+            "complete": 100,
+        }
         inputs = [
             LiteralInput(
                 "csv",
@@ -71,16 +75,7 @@ class ResolveRules(Process):
                 default="p2a_rules",
                 data_type="string",
             ),
-            LiteralInput(
-                "log_level",
-                "Log Level",
-                abstract="Python logging level",
-                min_occurs=1,
-                max_occurs=1,
-                allowed_values=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-                default="INFO",
-                data_type="string",
-            ),
+            log_level,
         ]
         outputs = [
             ComplexOutput(
@@ -110,25 +105,48 @@ class ResolveRules(Process):
         )
 
     def _handler(self, request, response):
-        rules, date_range, region, geoserver, connection_string, ensemble, log_level = [
+        loglevel = request.inputs["loglevel"][0].data
+        log_handler(
+            self, response, "Starting Process", process_step="start", log_level=loglevel
+        )
+        rules, date_range, region, geoserver, connection_string, ensemble, loglevel = [
             input[0].data for input in request.inputs.values()
         ]
 
         region = get_region(region, geoserver)
+        log_handler(
+            self,
+            response,
+            "Resolving impacts rules",
+            process_step="process",
+            log_level=loglevel,
+        )
         resolved = resolve_rules(
-            rules, date_range, region, ensemble, connection_string, log_level
+            rules, date_range, region, ensemble, connection_string, loglevel
         )
 
-        # Clean output before sending off
+        log_handler(
+            self,
+            response,
+            "Cleaning and building final output",
+            process_step="build_output",
+            log_level=loglevel,
+        )
         for target in [
             key for key, value in resolved.items() if type(value) == Decimal
         ]:
             resolved.update({target: str(resolved[target])})
 
-        # Create output
         filepath = os.path.join(self.workdir, "resolved.json")
         with open(filepath, "w") as f:
             json.dump(resolved, f)
 
         response.outputs["json"].file = filepath
+        log_handler(
+            self,
+            response,
+            "Process Complete",
+            process_step="complete",
+            log_level=loglevel,
+        )
         return response
