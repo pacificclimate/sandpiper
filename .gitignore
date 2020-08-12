@@ -4,3 +4,4 @@ venv/
 *.log
 *.sqlite
 .ipynb_checkpoints/
+.Rhistory
