@@ -9,6 +9,7 @@ from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
 from wps_tools.utils import log_handler
 from wps_tools.io import log_level
+from sandpiper.utils import logger
 
 
 class ResolveRules(Process):
@@ -107,7 +108,12 @@ class ResolveRules(Process):
     def _handler(self, request, response):
         loglevel = request.inputs["loglevel"][0].data
         log_handler(
-            self, response, "Starting Process", process_step="start", log_level=loglevel
+            self,
+            response,
+            "Starting Process",
+            logger,
+            log_level=loglevel,
+            process_step="start",
         )
         rules, date_range, region, geoserver, connection_string, ensemble, loglevel = [
             input[0].data for input in request.inputs.values()
@@ -118,8 +124,9 @@ class ResolveRules(Process):
             self,
             response,
             "Resolving impacts rules",
-            process_step="process",
+            logger,
             log_level=loglevel,
+            process_step="process",
         )
         resolved = resolve_rules(
             rules, date_range, region, ensemble, connection_string, loglevel
@@ -129,8 +136,9 @@ class ResolveRules(Process):
             self,
             response,
             "Cleaning and building final output",
-            process_step="build_output",
+            logger,
             log_level=loglevel,
+            process_step="build_output",
         )
         for target in [
             key for key, value in resolved.items() if type(value) == Decimal
@@ -146,7 +154,8 @@ class ResolveRules(Process):
             self,
             response,
             "Process Complete",
-            process_step="complete",
+            logger,
             log_level=loglevel,
+            process_step="complete",
         )
         return response

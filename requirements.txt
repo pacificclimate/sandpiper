@@ -4,4 +4,4 @@ click
 psutil
 p2a_impacts==0.2.0
 contexttimer==0.3.3
-wps-tools==0.1.1
+wps-tools==0.1.2
