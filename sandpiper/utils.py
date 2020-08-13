@@ -1,6 +1,7 @@
 import logging
 
-logger = logging.getLogger()
+logger = logging.getLogger("PYWPS")
+logger.setLevel(logging.NOTSET)
 
 formatter = logging.Formatter(
     "%(asctime)s %(levelname)s: sandpiper: %(message)s", "%Y-%m-%d %H:%M:%S"
