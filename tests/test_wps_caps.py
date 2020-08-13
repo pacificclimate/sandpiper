@@ -1,6 +1,6 @@
 from pywps import Service
 
-from .common import client_for
+from wps_tools.testing import client_for
 from sandpiper.processes import processes
 
 
