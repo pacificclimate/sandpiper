@@ -64,7 +64,7 @@ class ResolveRules(Process):
                 abstract="Database connection string",
                 min_occurs=1,
                 max_occurs=1,
-                default="postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta",
+                default="postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
                 data_type="string",
             ),
             LiteralInput(
