@@ -1,4 +1,4 @@
-FROM pcic/geospatial-python
+FROM pcic/geospatial-python:gdal3
 
 MAINTAINER https://github.com/pacificclimate/sandpiper
 LABEL Description="sandpiper WPS" Vendor="pacificclimate" Version="0.1.0"
@@ -9,7 +9,8 @@ WORKDIR /code
 
 COPY requirements.txt ./
 
-RUN pip3 install sphinx && \
+RUN apk add libxml2-dev libxslt-dev && \
+    pip3 install sphinx && \
     pip3 install -r requirements.txt && \
     pip3 install gunicorn && \
     # These lines combat a vulnerability in pyxdg in both python2 and python3
