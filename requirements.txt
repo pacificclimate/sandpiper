@@ -2,5 +2,5 @@ pywps>=4.2
 jinja2
 click
 psutil
-p2a_impacts==0.3.1
+p2a_impacts==0.3.3
 wps-tools==0.1.2
