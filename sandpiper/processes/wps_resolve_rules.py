@@ -140,10 +140,6 @@ class ResolveRules(Process):
             log_level=loglevel,
             process_step="build_output",
         )
-        for target in [
-            key for key, value in resolved.items() if type(value) == Decimal
-        ]:
-            resolved.update({target: str(resolved[target])})
 
         filepath = os.path.join(self.workdir, "resolved.json")
         with open(filepath, "w") as f:
