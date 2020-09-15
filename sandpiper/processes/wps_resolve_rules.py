@@ -64,7 +64,7 @@ class ResolveRules(Process):
                 abstract="Database connection string",
                 min_occurs=1,
                 max_occurs=1,
-                default="postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta",
+                default="postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
                 data_type="string",
             ),
             LiteralInput(
@@ -140,10 +140,6 @@ class ResolveRules(Process):
             log_level=loglevel,
             process_step="build_output",
         )
-        for target in [
-            key for key, value in resolved.items() if type(value) == Decimal
-        ]:
-            resolved.update({target: str(resolved[target])})
 
         filepath = os.path.join(self.workdir, "resolved.json")
         with open(filepath, "w") as f:
