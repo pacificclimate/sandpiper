@@ -15,7 +15,7 @@ export PIP_INDEX_URL=https://pypi.pacificclimate.org/simple
 OUTPUT_URL = https://docker-dev03.pcic.uvic.ca/wpsoutputs
 
 .PHONY: all
-all: apt develop test-all clean-test
+all: apt develop test-all clean-test credentials
 
 .PHONY: help
 help:
@@ -73,6 +73,10 @@ restart: venv stop start
 status: venv
 	@echo "Show status ..."
 	@-bash -c "${VENV}/bin/$(APP_NAME) status"
+
+.PHONY: credentials
+credentials:
+	test -f credentials.json || echo "{\n\t\"connection_string\": \"not_set\"\n}" > credentials.json
 
 .PHONY: clean
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
