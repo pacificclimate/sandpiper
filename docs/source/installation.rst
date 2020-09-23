@@ -7,13 +7,6 @@ Installation
     :local:
     :depth: 1
 
-Install from Conda
-------------------
-
-.. warning::
-
-   TODO: Prepare Conda package.
-
 Install from GitHub
 -------------------
 
@@ -24,7 +17,12 @@ Check out code from the sandpiper GitHub repo and start the installation:
    $ git clone https://github.com/nikola-rados/sandpiper.git
    $ cd sandpiper
 
-Create Python environment named `venv`:
+Full installation:
+.. code-block:: console
+
+  $ make
+
+If you do not wish to use `make` you may create a Python environment named `venv`:
 
 .. code-block:: console
 

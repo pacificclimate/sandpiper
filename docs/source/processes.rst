@@ -7,9 +7,9 @@ Processes
     :local:
     :depth: 1
 
-Say Hello
----------
+Resolve Rules
+-------------
 
-.. autoprocess:: sandpiper.processes.wps_say_hello.SayHello
+.. autoprocess:: sandpiper.processes.wps_resolve_rules.ResolveRules
    :docstring:
    :skiplines: 1
