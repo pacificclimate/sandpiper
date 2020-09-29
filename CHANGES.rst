@@ -1,6 +1,13 @@
 Changes
 *******
 
+1.0.1 (2020-09-29)
+==================
+
+* Updated logging configuration (#_28)
+
+.. _28: https://github.com/pacificclimate/sandpiper/pull/28
+
 1.0.0 (2020-09-23)
 ==================
 
