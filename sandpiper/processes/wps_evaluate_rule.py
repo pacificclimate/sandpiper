@@ -23,10 +23,7 @@ class EvaluateRule(Process):
 
         inputs = [
             LiteralInput(
-                "rule",
-                "Rule",
-                abstract="Rule expression",
-                data_type="string",
+                "rule", "Rule", abstract="Rule expression", data_type="string",
             ),
             LiteralInput(
                 "parse_tree",
@@ -81,9 +78,9 @@ class EvaluateRule(Process):
             process_step="start",
         )
 
-        rule = request.inputs['rule'][0].data
-        parse_tree_path = request.inputs['parse_tree'][0].data
-        variables_path = request.inputs['variables'][0].data
+        rule = request.inputs["rule"][0].data
+        parse_tree_path = request.inputs["parse_tree"][0].data
+        variables_path = request.inputs["variables"][0].data
 
         with open(parse_tree_path) as json_file:
             parse_tree = json.load(json_file)

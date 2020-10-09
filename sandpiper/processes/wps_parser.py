@@ -45,7 +45,7 @@ class Parser(Process):
                 "Region variable",
                 abstract="The region the data is associated with",
                 data_type="string",
-            )
+            ),
         ]
 
         super(Parser, self).__init__(
@@ -77,7 +77,7 @@ class Parser(Process):
             process_step="start",
         )
 
-        condition = request.inputs['condition'][0].data
+        condition = request.inputs["condition"][0].data
 
         log_handler(
             self,

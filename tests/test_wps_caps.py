@@ -10,8 +10,4 @@ def test_wps_caps():
     names = resp.xpath_text(
         "/wps:Capabilities" "/wps:ProcessOfferings" "/wps:Process" "/ows:Identifier"
     )
-    assert sorted(names.split()) == [
-        "evaluate_rule",
-        "parser",
-        "resolve_rules"
-    ]
+    assert sorted(names.split()) == ["evaluate_rule", "parser", "resolve_rules"]
