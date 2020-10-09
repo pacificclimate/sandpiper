@@ -1,14 +1,14 @@
 from pywps import Process, LiteralInput, LiteralOutput
 from pywps.app.Common import Metadata
 from functools import partial
-import requests
 import json
 
-from p2a_impacts.fetch_data import get_dict_val, get_variables
+from p2a_impacts.fetch_data import get_dict_val
 from p2a_impacts.evaluator import evaluate_rule
 from wps_tools.utils import log_handler
 from wps_tools.io import log_level
 from sandpiper.utils import logger
+
 
 class EvaluateRule(Process):
     """Evaluates the truth value of a climatological impact rule"""
