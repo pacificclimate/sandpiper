@@ -7,7 +7,7 @@ from wps_tools.io import log_level
 from sandpiper.utils import logger
 
 class Parser(Process):
-    """Breaks down a condition into a parse tree"""
+    """Breaks down a logical condition into a parse tree"""
 
     def __init__(self):
         self.status_percentage_steps = {

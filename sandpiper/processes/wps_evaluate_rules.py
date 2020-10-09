@@ -1,4 +1,4 @@
-from pywps import Process, LiteralInput, ComplexInput, LiteralOutput, FORMATS
+from pywps import Process, LiteralInput, LiteralOutput
 from pywps.app.Common import Metadata
 from functools import partial
 import requests
@@ -11,7 +11,7 @@ from wps_tools.io import log_level
 from sandpiper.utils import logger
 
 class EvaluateRule(Process):
-    """Resolves climatological impacts rules"""
+    """Evaluates the truth value of a climatological impact rule"""
 
     def __init__(self):
         self.status_percentage_steps = {
