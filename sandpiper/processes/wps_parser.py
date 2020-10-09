@@ -1,10 +1,10 @@
 from pywps import Process, LiteralInput, LiteralOutput
-import requests
 from pywps.app.Common import Metadata
 from p2a_impacts.parser import build_parse_tree
 from wps_tools.utils import log_handler
 from wps_tools.io import log_level
 from sandpiper.utils import logger
+
 
 class Parser(Process):
     """Breaks down a logical condition into a parse tree"""

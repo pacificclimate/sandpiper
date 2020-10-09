@@ -1,10 +1,7 @@
 from pywps import Process, LiteralInput, ComplexOutput, FORMATS
 from pywps.app.Common import Metadata
-import csv
 import json
-import requests
 import os
-from decimal import Decimal
 from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
 from wps_tools.utils import log_handler
