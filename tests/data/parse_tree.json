@@ -1,1 +1,1 @@
-{"rule_snow": ["<=", "temp_djf_iamean_s0p_hist", -6.0]}
+{"rule_snow": ["<=", "temp_djf_iamean_s0p_hist", -6.0], "rule_rain": [">=", "temp_djf_iamean_s100p_hist", 5.0], "rule_hybrid": ["||", ["||", ["&&", ["<=", "temp_djf_iamean_s0p_hist", -6.0], [">=", "temp_djf_iamean_s100p_hist", -6.0]], ["&&", ["<=", "temp_djf_iamean_s0p_hist", 5.0], [">=", "temp_djf_iamean_s100p_hist", 5.0]]], ["&&", [">=", "temp_djf_iamean_s0p_hist", -6.0], ["<=", "temp_djf_iamean_s100p_hist", 5.0]]]}
