@@ -6,11 +6,7 @@ from sandpiper.processes.wps_evaluate_rule import EvaluateRule
 
 
 @pytest.mark.parametrize(
-    (
-        "rule",
-        "parse_tree",
-        "variables",
-    ),
+    ("rule", "parse_tree", "variables",),
     [
         (
             "rule_snow",
@@ -20,9 +16,5 @@ from sandpiper.processes.wps_evaluate_rule import EvaluateRule
     ],
 )
 def test_wps_evaluate_rule(rule, parse_tree, variables):
-    datainputs = (
-        f"rule={rule};"
-        f"parse_tree={parse_tree};"
-        f"variables={variables};"
-    )
+    datainputs = f"rule={rule};" f"parse_tree={parse_tree};" f"variables={variables};"
     run_wps_process(EvaluateRule(), datainputs)
