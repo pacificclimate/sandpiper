@@ -1,6 +1,13 @@
 Changes
 *******
 
+1.1.0 (2020-10-14)
+==================
+
+* Decompose rule resolving steps into separate processes (#_30)
+
+.. _30: https://github.com/pacificclimate/sandpiper/pull/30
+
 1.0.1 (2020-09-29)
 ==================
 
