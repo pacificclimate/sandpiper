@@ -17,7 +17,7 @@ OUTPUT_URL = https://docker-dev03.pcic.uvic.ca/wpsoutputs
 SANITIZE_FILE := https://github.com/Ouranosinc/PAVICS-e2e-workflow-tests/raw/master/notebooks/output-sanitize.cfg
 
 .PHONY: all
-all: apt develop test-all clean-test credentials test-notebooks
+all: apt develop test-all clean-test credentials test-notebooks-online
 
 .PHONY: help
 help:
@@ -139,6 +139,11 @@ notebook-sanitizer:
 test-notebooks: notebook-sanitizer
 	@echo "Running notebook-based tests"
 	@bash -c "source $(VENV)/bin/activate && env WPS_URL=$(WPS_URL) pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
+
+.PHONY: test-notebooks-online
+test-notebooks-online: notebook-sanitizer
+	@echo "Running notebook-based tests against online instance of sandpiper"
+	@bash -c "source $(VENV)/bin/activate && pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
 
 .PHONY: lint
 lint: venv
