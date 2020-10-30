@@ -4,17 +4,18 @@ APP_NAME := sandpiper
 VENV?=/tmp/sandpiper-venv
 PYTHON=${VENV}/bin/python3
 PIP=${VENV}/bin/pip
-
-WPS_URL = http://localhost:5003
-
 export PIP_INDEX_URL=https://pypi.pacificclimate.org/simple
+
+# Notebook targets
+LOCAL_URL = http://localhost:5003
+DEV_PORT ?= $(shell bash -c 'read -ep "Target port: " port; echo $$port')
 
 # Used in target refresh-notebooks to make it looks like the notebooks have
 # been refreshed from the production server below instead of from the local dev
 # instance so the notebooks can also be used as tutorial notebooks.
 OUTPUT_URL = https://docker-dev03.pcic.uvic.ca/wpsoutputs
-
 SANITIZE_FILE := https://github.com/Ouranosinc/PAVICS-e2e-workflow-tests/raw/master/notebooks/output-sanitize.cfg
+
 
 .PHONY: all
 all: apt develop test-all clean-test credentials test-notebooks-online
@@ -138,12 +139,18 @@ notebook-sanitizer:
 .PHONY: test-notebooks
 test-notebooks: notebook-sanitizer
 	@echo "Running notebook-based tests"
-	@bash -c "source $(VENV)/bin/activate && env WPS_URL=$(WPS_URL) pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
+	@bash -c "source $(VENV)/bin/activate && env LOCAL_URL=$(LOCAL_URL) pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
 
 .PHONY: test-notebooks-online
 test-notebooks-online: notebook-sanitizer
 	@echo "Running notebook-based tests against online instance of sandpiper"
 	@bash -c "source $(VENV)/bin/activate && pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
+
+.PHONY: test-notebooks-custom
+test-notebooks-custom: notebook-sanitizer
+	@echo "Running notebook-based tests against custom docker instance of thunderbird"
+	@bash -c "source $(VENV)/bin/activate && env DEV_URL=http://docker-dev03.pcic.uvic.ca:$(DEV_PORT)/wps pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
+
 
 .PHONY: lint
 lint: venv
@@ -153,7 +160,7 @@ lint: venv
 .PHONY: refresh-notebooks
 refresh-notebooks:
 	@echo "Refresh all notebook outputs under docs/source/notebooks"
-	@bash -c 'for nb in $(CURDIR)/docs/source/notebooks/*.ipynb; do WPS_URL="$(WPS_URL)" jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=60 --output "$$nb" "$$nb"; sed -i "s@$(WPS_URL)/outputs/@$(OUTPUT_URL)/@g" "$$nb"; done; cd $(APP_ROOT)'
+	@bash -c 'for nb in $(CURDIR)/docs/source/notebooks/*.ipynb; do LOCAL_URL="$(LOCAL_URL)" jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=60 --output "$$nb" "$$nb"; sed -i "s@$(LOCAL_URL)/outputs/@$(OUTPUT_URL)/@g" "$$nb"; done; cd $(APP_ROOT)'
 
 ## Sphinx targets
 
