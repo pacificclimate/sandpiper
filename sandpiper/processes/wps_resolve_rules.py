@@ -121,9 +121,16 @@ class ResolveRules(Process):
             log_level=loglevel,
             process_step="start",
         )
-        rules, date_range, region, geoserver, connection_string, ensemble, thredds, loglevel = [
-            input[0].data for input in request.inputs.values()
-        ]
+        (
+            rules,
+            date_range,
+            region,
+            geoserver,
+            connection_string,
+            ensemble,
+            thredds,
+            loglevel,
+        ) = [input[0].data for input in request.inputs.values()]
 
         region = get_region(region, geoserver)
         log_handler(
