@@ -11,7 +11,6 @@ services:
       - ../../sandpiper/pavics-component/wps.cfg:/wps.cfg
       - wps_outputs:/data/wpsoutputs
       - /tmp
-      - /storage/data/climate/downscale/BCCAQ2/:/storage/data/climate/downscale/BCCAQ2/
     restart: always
 
   magpie:

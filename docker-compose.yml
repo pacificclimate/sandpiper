@@ -5,8 +5,6 @@ services:
     image: pcic/sandpiper
     ports:
       - "8101:5003"
-    volumes:
-      - /storage/data/climate/downscale/BCCAQ2/:/storage/data/climate/downscale/BCCAQ2/
 
 # docker-compose build
 # docker-compose up
