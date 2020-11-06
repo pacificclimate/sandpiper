@@ -26,7 +26,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
             "http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
             "postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
             "p2a_rules",
-            "True",
+            "False",
             "INFO",
         ),
     ],
