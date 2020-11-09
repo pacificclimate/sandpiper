@@ -4,6 +4,7 @@ MAINTAINER https://github.com/pacificclimate/sandpiper
 LABEL Description="sandpiper WPS" Vendor="pacificclimate" Version="0.1.0"
 
 ENV PIP_INDEX_URL="https://pypi.pacificclimate.org/simple/"
+ENV THREDDS_URL_ROOT="https://docker-dev03.pcic.uvic.ca/twitcher/ows/proxy/thredds/dodsC/datasets"
 
 WORKDIR /code
 

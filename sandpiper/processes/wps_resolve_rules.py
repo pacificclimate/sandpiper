@@ -73,6 +73,15 @@ class ResolveRules(Process):
                 default="p2a_rules",
                 data_type="string",
             ),
+            LiteralInput(
+                "thredds",
+                "Thredds",
+                abstract="Data from thredds server. It is not recommended to change from the default (True)",
+                min_occurs=0,
+                max_occurs=1,
+                default=True,
+                data_type="boolean",
+            ),
             log_level,
         ]
         outputs = [
@@ -112,9 +121,16 @@ class ResolveRules(Process):
             log_level=loglevel,
             process_step="start",
         )
-        rules, date_range, region, geoserver, connection_string, ensemble, loglevel = [
-            input[0].data for input in request.inputs.values()
-        ]
+        (
+            rules,
+            date_range,
+            region,
+            geoserver,
+            connection_string,
+            ensemble,
+            thredds,
+            loglevel,
+        ) = [input[0].data for input in request.inputs.values()]
 
         region = get_region(region, geoserver)
         log_handler(
@@ -126,7 +142,7 @@ class ResolveRules(Process):
             process_step="process",
         )
         resolved = resolve_rules(
-            rules, date_range, region, ensemble, connection_string, loglevel
+            rules, date_range, region, ensemble, connection_string, thredds, loglevel
         )
 
         log_handler(
