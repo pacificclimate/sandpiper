@@ -1,6 +1,13 @@
 Changes
 *******
 
+1.2.0 (2020-11-10)
+==================
+
+* Target thredds for data (#_38)
+
+.. _38: https://github.com/pacificclimate/sandpiper/pull/38
+
 1.1.0 (2020-10-14)
 ==================
 
