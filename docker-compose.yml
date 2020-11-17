@@ -3,9 +3,14 @@ services:
   sandpiper-dev:
     image: pcic/sandpiper:i40-unable-to-collect-output
     container_name: sandpiper-dev
+    environment:
+      - PYWPS_CFG=/wps.cfg
     ports:
       - "30101:5003"
+    volumes:
+      - ./dev-component/wps.cfg:/wps.cfg
     restart: always
+
 networks:
   default:
     external:
