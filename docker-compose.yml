@@ -1,10 +1,16 @@
-version: '3'
+version: '3.0'
 services:
-  wps:
-    build: .
-    image: pcic/sandpiper
+  sandpiper-dev:
+    image: pcic/sandpiper:i40-unable-to-collect-output
+    container_name: sandpiper-dev
     ports:
-      - "8101:5003"
+      - "30101:5003"
+    restart: always
+networks:
+  default:
+    external:
+      name: pcicbr0
+
 
 # docker-compose build
 # docker-compose up
