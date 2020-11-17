@@ -1,10 +1,21 @@
-version: '3'
+version: '3.0'
 services:
-  wps:
-    build: .
-    image: pcic/sandpiper
+  sandpiper-dev:
+    image: pcic/sandpiper:latest
+    container_name: sandpiper-dev
+    environment:
+      - PYWPS_CFG=/wps.cfg
     ports:
-      - "8101:5003"
+      - "30101:5003"
+    volumes:
+      - ./dev-component/wps.cfg:/wps.cfg
+    restart: always
+
+networks:
+  default:
+    external:
+      name: pcicbr0
+
 
 # docker-compose build
 # docker-compose up
