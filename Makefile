@@ -18,7 +18,7 @@ SANITIZE_FILE := https://github.com/Ouranosinc/PAVICS-e2e-workflow-tests/raw/mas
 
 
 .PHONY: all
-all: apt develop test-all clean-test credentials test-notebooks-online
+all: apt develop test-all clean-test credentials test-notebooks-prod
 
 .PHONY: help
 help:
@@ -141,14 +141,19 @@ test-notebooks: notebook-sanitizer
 	@echo "Running notebook-based tests"
 	@bash -c "source $(VENV)/bin/activate && env LOCAL_URL=$(LOCAL_URL) pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
 
-.PHONY: test-notebooks-online
-test-notebooks-online: notebook-sanitizer
-	@echo "Running notebook-based tests against online instance of sandpiper"
+.PHONY: test-notebooks-prod
+test-notebooks-prod: notebook-sanitizer
+	@echo "Running notebook-based tests against production instance of sandpiper"
 	@bash -c "source $(VENV)/bin/activate && pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
+
+.PHONY: test-notebooks-dev
+test-notebooks-dev: notebook-sanitizer
+	@echo "Running notebook-based tests against development instance of sandpiper"
+	@bash -c "source $(VENV)/bin/activate && env DEV_URL=http://docker-dev03.pcic.uvic.ca:30101/wps pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
 
 .PHONY: test-notebooks-custom
 test-notebooks-custom: notebook-sanitizer
-	@echo "Running notebook-based tests against custom docker instance of thunderbird"
+	@echo "Running notebook-based tests against custom instance of sandpiper"
 	@bash -c "source $(VENV)/bin/activate && env DEV_URL=http://docker-dev03.pcic.uvic.ca:$(DEV_PORT)/wps pytest --nbval --verbose $(CURDIR)/docs/source/notebooks/ --sanitize-with $(CURDIR)/docs/source/output-sanitize.cfg --ignore $(CURDIR)/docs/source/notebooks/.ipynb_checkpoints"
 
 
