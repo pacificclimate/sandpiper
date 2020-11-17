@@ -1,7 +1,7 @@
 version: '3.0'
 services:
   sandpiper-dev:
-    image: pcic/sandpiper:i40-unable-to-collect-output
+    image: pcic/sandpiper:latest
     container_name: sandpiper-dev
     environment:
       - PYWPS_CFG=/wps.cfg
