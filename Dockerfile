@@ -16,16 +16,15 @@ COPY . /opt/wps
 
 WORKDIR /opt/wps
 
-# Create python environment
-RUN ["python", "-m", "venv", "venv"]
-
 # Install WPS
-RUN ["sh", "-c", "source venv/bin/activate && pip install sphinx psutil && pip install -e ."]
+RUN pip install --upgrade pip && \
+    pip install sphinx psutil && \
+    pip install -e . --ignore-installed
 
 # Start WPS service on port 5003 on 0.0.0.0
 EXPOSE 5003
 ENTRYPOINT ["sh", "-c"]
-CMD ["source venv/bin/activate && exec sandpiper start -b 0.0.0.0"]
+CMD ["exec sandpiper start -b 0.0.0.0"]
 
 # docker build -t pcic/sandpiper .
 # docker run -p 5003:5003 pcic/sandpiper
