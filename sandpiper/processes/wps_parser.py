@@ -1,7 +1,7 @@
 from pywps import Process, LiteralInput, LiteralOutput
 from pywps.app.Common import Metadata
 from p2a_impacts.parser import build_parse_tree
-from wps_tools.utils import log_handler
+from wps_tools.utils import log_handler, collect_args
 from wps_tools.io import log_level
 from sandpiper.utils import logger
 
@@ -67,7 +67,9 @@ class Parser(Process):
         )
 
     def _handler(self, request, response):
-        loglevel = request.inputs["loglevel"][0].data
+        (condition, loglevel) = [
+            arg[0] for arg in collect_args(request, self.workdir).values()
+        ]
         log_handler(
             self,
             response,
@@ -76,8 +78,6 @@ class Parser(Process):
             log_level=loglevel,
             process_step="start",
         )
-
-        condition = request.inputs["condition"][0].data
 
         log_handler(
             self,

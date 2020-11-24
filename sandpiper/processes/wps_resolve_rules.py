@@ -4,7 +4,7 @@ import json
 import os
 from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
-from wps_tools.utils import log_handler
+from wps_tools.utils import log_handler, collect_args
 from wps_tools.io import log_level
 from sandpiper.utils import logger
 
@@ -112,15 +112,6 @@ class ResolveRules(Process):
         )
 
     def _handler(self, request, response):
-        loglevel = request.inputs["loglevel"][0].data
-        log_handler(
-            self,
-            response,
-            "Starting Process",
-            logger,
-            log_level=loglevel,
-            process_step="start",
-        )
         (
             rules,
             date_range,
@@ -130,7 +121,15 @@ class ResolveRules(Process):
             ensemble,
             thredds,
             loglevel,
-        ) = [input[0].data for input in request.inputs.values()]
+        ) = [arg[0] for arg in collect_args(request, self.workdir).values()]
+        log_handler(
+            self,
+            response,
+            "Starting Process",
+            logger,
+            log_level=loglevel,
+            process_step="start",
+        )
 
         region = get_region(region, geoserver)
         log_handler(

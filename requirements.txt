@@ -4,4 +4,4 @@ jinja2
 click
 psutil
 p2a_impacts==0.4.0
-wps-tools==0.2.0
+wps-tools==0.3.0
