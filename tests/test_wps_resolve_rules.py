@@ -52,7 +52,7 @@ def test_wps_resolve_rules(
     log_level,
 ):
     datainputs = (
-        f"csv={csv};"
+        f"csv=@xlink:href={csv};"
         f"date_range={date_range};"
         f"region={region};"
         f"geoserver={geoserver};"
