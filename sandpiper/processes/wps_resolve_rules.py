@@ -1,4 +1,4 @@
-from pywps import Process, LiteralInput, ComplexOutput, FORMATS
+from pywps import Process, LiteralInput, ComplexInput, ComplexOutput, FORMATS, Format
 from pywps.app.Common import Metadata
 import json
 import os
@@ -26,7 +26,7 @@ class ResolveRules(Process):
                 abstract="Path to CSV file",
                 min_occurs=1,
                 max_occurs=1,
-                data_type="string",
+                supported_formats=[Format("text/csv", extension=".csv")],
             ),
             LiteralInput(
                 "date_range",
