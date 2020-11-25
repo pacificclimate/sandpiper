@@ -4,7 +4,7 @@ import json
 import os
 from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
-from wps_tools.utils import log_handler, collect_args
+from wps_tools.utils import log_handler, collect_args, common_status_percentages
 from wps_tools.io import log_level
 from sandpiper.utils import logger
 
@@ -13,14 +13,11 @@ class ResolveRules(Process):
     """Resolves climatological impacts rules"""
 
     def __init__(self):
-        self.status_percentage_steps = {
-            "start": 0,
-            "process": 10,
-            "build_output": 95,
-            "complete": 100,
-        }
+        self.status_percentage_steps = dict(
+            common_status_percentages, **{"get_region": 10}
+        )
         inputs = [
-            LiteralInput(
+            ComplexInput(
                 "csv",
                 "CSV path",
                 abstract="Path to CSV file",
@@ -131,7 +128,16 @@ class ResolveRules(Process):
             process_step="start",
         )
 
+        log_handler(
+            self,
+            response,
+            "Retrieving region data from GeoServer",
+            logger,
+            log_level=loglevel,
+            process_step="get_region",
+        )
         region = get_region(region, geoserver)
+
         log_handler(
             self,
             response,
@@ -152,7 +158,6 @@ class ResolveRules(Process):
             log_level=loglevel,
             process_step="build_output",
         )
-
         filepath = os.path.join(self.workdir, "resolved.json")
         with open(filepath, "w") as f:
             json.dump(resolved, f)

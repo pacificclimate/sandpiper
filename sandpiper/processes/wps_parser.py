@@ -1,7 +1,7 @@
 from pywps import Process, LiteralInput, LiteralOutput
 from pywps.app.Common import Metadata
 from p2a_impacts.parser import build_parse_tree
-from wps_tools.utils import log_handler, collect_args
+from wps_tools.utils import log_handler, collect_args, common_status_percentages
 from wps_tools.io import log_level
 from sandpiper.utils import logger
 
@@ -10,12 +10,7 @@ class Parser(Process):
     """Breaks down a logical condition into a parse tree"""
 
     def __init__(self):
-        self.status_percentage_steps = {
-            "start": 0,
-            "process": 10,
-            "build_output": 95,
-            "complete": 100,
-        }
+        self.status_percentage_steps = common_status_percentages
 
         inputs = [
             LiteralInput(
@@ -87,7 +82,6 @@ class Parser(Process):
             log_level=loglevel,
             process_step="process",
         )
-
         parse_tree, vars, region_var = build_parse_tree(condition)
 
         log_handler(
@@ -98,7 +92,6 @@ class Parser(Process):
             log_level=loglevel,
             process_step="build_output",
         )
-
         response.outputs["parse_tree"].data = parse_tree
         response.outputs["variables"].data = vars
         response.outputs["region_variable"].data = region_var

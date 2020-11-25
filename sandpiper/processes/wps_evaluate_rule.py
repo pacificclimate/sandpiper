@@ -5,7 +5,7 @@ import json
 
 from p2a_impacts.fetch_data import get_dict_val
 from p2a_impacts.evaluator import evaluate_rule
-from wps_tools.utils import log_handler, collect_args
+from wps_tools.utils import log_handler, collect_args, common_status_percentages
 from wps_tools.io import log_level
 from sandpiper.utils import logger
 
@@ -14,12 +14,9 @@ class EvaluateRule(Process):
     """Evaluates the truth value of a climatological impact rule"""
 
     def __init__(self):
-        self.status_percentage_steps = {
-            "start": 0,
-            "process": 10,
-            "build_output": 95,
-            "complete": 100,
-        }
+        self.status_percentage_steps = dict(
+            common_status_percentages, **{"extract_json": 10, "set_getters": 15}
+        )
 
         inputs = [
             LiteralInput(
@@ -80,11 +77,27 @@ class EvaluateRule(Process):
             process_step="start",
         )
 
+        log_handler(
+            self,
+            response,
+            "Extracting json data 'parse_tree' and 'variables'",
+            logger,
+            log_level=loglevel,
+            process_step="extract_json",
+        )
         with open(parse_tree_path) as json_file:
             parse_tree = json.load(json_file)
         with open(variables_path) as json_file:
             collected_variables = json.load(json_file)
 
+        log_handler(
+            self,
+            response,
+            "Setting getter functions",
+            logger,
+            log_level=loglevel,
+            process_step="set_getters",
+        )
         variable_getter = partial(get_dict_val, collected_variables)
         rule_getter = partial(get_dict_val, parse_tree)
 
@@ -96,7 +109,6 @@ class EvaluateRule(Process):
             log_level=loglevel,
             process_step="process",
         )
-
         truth_value = evaluate_rule(rule, rule_getter, variable_getter)
 
         log_handler(
@@ -107,7 +119,6 @@ class EvaluateRule(Process):
             log_level=loglevel,
             process_step="build_output",
         )
-
         response.outputs["truth_value"].data = truth_value
 
         log_handler(
