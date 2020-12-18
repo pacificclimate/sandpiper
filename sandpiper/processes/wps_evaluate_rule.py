@@ -1,4 +1,4 @@
-from pywps import Process, LiteralInput, LiteralOutput
+from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, Format, FORMATS
 from pywps.app.Common import Metadata
 from functools import partial
 import json
@@ -25,17 +25,17 @@ class EvaluateRule(Process):
             LiteralInput(
                 "rule", "Rule", abstract="Rule expression", data_type="string",
             ),
-            LiteralInput(
+            ComplexInput(
                 "parse_tree",
                 "Parse Tree Dictionary",
                 abstract="File path to dictionary used for rule getter function",
-                data_type="string",
+                supported_formats=[FORMATS.JSON],
             ),
-            LiteralInput(
+            ComplexInput(
                 "variables",
                 "Variable Dictionary",
                 abstract="File path to dictionary used for variables",
-                data_type="string",
+                supported_formats=[FORMATS.JSON],
             ),
             log_level,
         ]
@@ -79,8 +79,8 @@ class EvaluateRule(Process):
         )
 
         rule = request.inputs["rule"][0].data
-        parse_tree_path = request.inputs["parse_tree"][0].data
-        variables_path = request.inputs["variables"][0].data
+        parse_tree_path = request.inputs["parse_tree"][0].file
+        variables_path = request.inputs["variables"][0].file
 
         with open(parse_tree_path) as json_file:
             parse_tree = json.load(json_file)
