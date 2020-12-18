@@ -5,7 +5,7 @@ import json
 
 from p2a_impacts.fetch_data import get_dict_val
 from p2a_impacts.evaluator import evaluate_rule
-from wps_tools.utils import log_handler
+from wps_tools.utils import log_handler, collect_args
 from wps_tools.io import log_level
 from sandpiper.utils import logger
 
@@ -68,7 +68,10 @@ class EvaluateRule(Process):
         )
 
     def _handler(self, request, response):
-        loglevel = request.inputs["loglevel"][0].data
+        rule, parse_tree_path, variables_path, loglevel = [
+            arg[0] for arg in collect_args(request, self.workdir).values()
+        ]
+
         log_handler(
             self,
             response,
@@ -77,10 +80,6 @@ class EvaluateRule(Process):
             log_level=loglevel,
             process_step="start",
         )
-
-        rule = request.inputs["rule"][0].data
-        parse_tree_path = request.inputs["parse_tree"][0].file
-        variables_path = request.inputs["variables"][0].file
 
         with open(parse_tree_path) as json_file:
             parse_tree = json.load(json_file)
