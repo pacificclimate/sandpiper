@@ -1,4 +1,4 @@
-from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, Format, FORMATS
+from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, FORMATS
 from pywps.app.Common import Metadata
 from functools import partial
 import json

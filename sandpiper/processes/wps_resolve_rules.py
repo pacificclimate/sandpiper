@@ -1,10 +1,10 @@
-from pywps import Process, LiteralInput, ComplexOutput, FORMATS
+from pywps import Process, LiteralInput, ComplexInput, ComplexOutput, FORMATS, Format
 from pywps.app.Common import Metadata
 import json
 import os
 from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
-from wps_tools.utils import log_handler
+from wps_tools.utils import log_handler, collect_args
 from wps_tools.io import log_level
 from sandpiper.utils import logger
 
@@ -20,13 +20,13 @@ class ResolveRules(Process):
             "complete": 100,
         }
         inputs = [
-            LiteralInput(
+            ComplexInput(
                 "csv",
                 "CSV path",
                 abstract="Path to CSV file",
                 min_occurs=1,
                 max_occurs=1,
-                data_type="string",
+                supported_formats=[Format("text/csv", extension=".csv")],
             ),
             LiteralInput(
                 "date_range",
@@ -130,7 +130,7 @@ class ResolveRules(Process):
             ensemble,
             thredds,
             loglevel,
-        ) = [input[0].data for input in request.inputs.values()]
+        ) = [arg[0] for arg in collect_args(request, self.workdir).values()]
 
         region = get_region(region, geoserver)
         log_handler(
