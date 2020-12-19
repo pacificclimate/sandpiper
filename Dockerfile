@@ -21,12 +21,12 @@ RUN pip install --upgrade pip && \
     pip install sphinx psutil && \
     pip install -e . --ignore-installed
 
-# Start WPS service on port 5003 on 0.0.0.0
-EXPOSE 5003
+# Start WPS service on port 5000 on 0.0.0.0
+EXPOSE 5000
 ENTRYPOINT ["sh", "-c"]
 CMD ["exec sandpiper start -b 0.0.0.0"]
 
 # docker build -t pcic/sandpiper .
-# docker run -p 5003:5003 pcic/sandpiper
-# http://localhost:5003/wps?request=GetCapabilities&service=WPS
-# http://localhost:5003/wps?request=DescribeProcess&service=WPS&identifier=all&version=1.0.0
+# docker run -p 5000:5000 pcic/sandpiper
+# http://localhost:5000/wps?request=GetCapabilities&service=WPS
+# http://localhost:5000/wps?request=DescribeProcess&service=WPS&identifier=all&version=1.0.0

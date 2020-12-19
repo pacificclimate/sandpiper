@@ -8,7 +8,7 @@ export PIP_INDEX_URL=https://pypi.pacificclimate.org/simple
 export THREDDS_URL_ROOT=https://docker-dev03.pcic.uvic.ca/twitcher/ows/proxy/thredds/dodsC/datasets
 
 # Notebook targets
-LOCAL_URL = http://localhost:5003
+LOCAL_URL = http://localhost:5000
 DEV_PORT ?= $(shell bash -c 'read -ep "Target port: " port; echo $$port')
 
 # Used in target refresh-notebooks to make it looks like the notebooks have

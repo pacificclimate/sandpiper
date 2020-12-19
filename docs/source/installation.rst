@@ -69,7 +69,7 @@ After successful installation you can start the service using the ``sandpiper`` 
 
 The deployed WPS service is by default available on:
 
-http://localhost:5003/wps?service=WPS&version=1.0.0&request=GetCapabilities.
+http://localhost:5000/wps?service=WPS&version=1.0.0&request=GetCapabilities.
 
 .. NOTE:: Remember the process ID (PID) so you can stop the service with ``kill PID``.
 
