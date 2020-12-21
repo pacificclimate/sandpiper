@@ -5,6 +5,7 @@ VENV?=/tmp/sandpiper-venv
 PYTHON=${VENV}/bin/python3
 PIP=${VENV}/bin/pip
 export PIP_INDEX_URL=https://pypi.pacificclimate.org/simple
+export THREDDS_URL_ROOT=https://docker-dev03.pcic.uvic.ca/twitcher/ows/proxy/thredds/dodsC/datasets
 
 # Notebook targets
 LOCAL_URL = http://localhost:5003
