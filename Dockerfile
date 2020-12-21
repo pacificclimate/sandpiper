@@ -19,12 +19,12 @@ WORKDIR /opt/wps
 # Install WPS
 RUN pip install --upgrade pip && \
     pip install sphinx psutil && \
-    pip install -e . --ignore-installed
+    pip install -e . --ignore-installed && \
+    pip install gunicorn
 
 # Start WPS service on port 5000 on 0.0.0.0
 EXPOSE 5000
-ENTRYPOINT ["sh", "-c"]
-CMD ["exec sandpiper start -b 0.0.0.0"]
+CMD gunicorn --bind=0.0.0.0:5000 --timeout 150 sandpiper.wsgi:application
 
 # docker build -t pcic/sandpiper .
 # docker run -p 5000:5000 pcic/sandpiper
