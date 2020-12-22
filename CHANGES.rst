@@ -1,45 +1,51 @@
 Changes
 *******
 
+1.3.1 (2020-12-22)
+==================
+
+* ``Dockerfile`` update
+* Reset default port to ``5000``
+
 1.3.0 (2020-11-17)
 ==================
 
-* Docker rework (#_41)
+* Docker rework (#41_)
 
 .. _41: https://github.com/pacificclimate/sandpiper/pull/41
 
 1.2.0 (2020-11-10)
 ==================
 
-* Target thredds for data (#_38)
+* Target thredds for data (#38_)
 
 .. _38: https://github.com/pacificclimate/sandpiper/pull/38
 
 1.1.0 (2020-10-14)
 ==================
 
-* Decompose rule resolving steps into separate processes (#_30)
+* Decompose rule resolving steps into separate processes (#30_)
 
 .. _30: https://github.com/pacificclimate/sandpiper/pull/30
 
 1.0.1 (2020-09-29)
 ==================
 
-* Updated logging configuration (#_28)
+* Updated logging configuration (#28_)
 
 .. _28: https://github.com/pacificclimate/sandpiper/pull/28
 
 1.0.0 (2020-09-23)
 ==================
 
-* Translated project from ``conda`` to ``pip`` (#_6)
-* Added rule resolving process (#_8)
-* Fixed image vulnerability (#_12)
-* Moved demo target to ``geoserver`` (#_13)
-* Updated repo with ``cruft`` (#_16)
-* Refactored common function out to ``wps-tools`` (#_17)
-* Upgraded ``p2a_impacts`` target version (#_23)
-* Updated notebook demo (#_24)
+* Translated project from ``conda`` to ``pip`` (#6_)
+* Added rule resolving process (#8_)
+* Fixed image vulnerability (#12_)
+* Moved demo target to ``geoserver`` (#13_)
+* Updated repo with ``cruft`` (#16_)
+* Refactored common function out to ``wps-tools`` (#17_)
+* Upgraded ``p2a_impacts`` target version (#23_)
+* Updated notebook demo (#24_)
 
 .. _6: https://github.com/pacificclimate/sandpiper/pull/6
 .. _8: https://github.com/pacificclimate/sandpiper/pull/8
