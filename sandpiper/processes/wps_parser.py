@@ -1,7 +1,7 @@
 from pywps import Process, LiteralInput, LiteralOutput
 from pywps.app.Common import Metadata
 from p2a_impacts.parser import build_parse_tree
-from wps_tools.utils import log_handler
+from wps_tools.logging import log_handler
 from wps_tools.io import log_level
 from sandpiper.utils import logger
 
