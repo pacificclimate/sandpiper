@@ -10,9 +10,8 @@ ENV THREDDS_URL_ROOT="https://docker-dev03.pcic.uvic.ca/twitcher/ows/proxy/thred
 RUN apk add \
   libxml2-dev \
   libxslt-dev \
-  linux-headers
-
-RUN apt-get install -y r-base
+  linux-headers \
+  r-base
 
 COPY . /opt/wps
 
