@@ -7,6 +7,7 @@ from p2a_impacts.utils import get_region, REGIONS
 from wps_tools.utils import log_handler, collect_args
 from wps_tools.io import log_level
 from sandpiper.utils import logger
+from tempfile import NamedTemporaryFile
 
 
 class ResolveRules(Process):
@@ -20,13 +21,13 @@ class ResolveRules(Process):
             "complete": 100,
         }
         inputs = [
-            ComplexInput(
-                "csv",
-                "CSV path",
-                abstract="Path to CSV file",
+            LiteralInput(
+                "csv_content",
+                "CSV content",
+                abstract="Contents of the 'rules' CSV file",
                 min_occurs=1,
                 max_occurs=1,
-                supported_formats=[Format("text/csv", extension=".csv")],
+                data_type="string",
             ),
             LiteralInput(
                 "date_range",
@@ -132,18 +133,28 @@ class ResolveRules(Process):
             process_step="start",
         )
 
-        region = get_region(region, geoserver)
-        log_handler(
-            self,
-            response,
-            "Resolving impacts rules",
-            logger,
-            log_level=loglevel,
-            process_step="process",
-        )
-        resolved = resolve_rules(
-            rules, date_range, region, ensemble, connection_string, thredds, loglevel
-        )
+        with NamedTemporaryFile(mode="w+", suffix=".csv") as temp_rules:
+            temp_rules.write(rules)
+            temp_rules.seek(0)
+
+            log_handler(
+                self,
+                response,
+                "Resolving impacts rules",
+                logger,
+                log_level=loglevel,
+                process_step="process",
+            )
+
+            resolved = resolve_rules(
+                temp_rules.name,
+                date_range,
+                get_region(region, geoserver),
+                ensemble,
+                connection_string,
+                thredds,
+                loglevel,
+            )
 
         log_handler(
             self,
