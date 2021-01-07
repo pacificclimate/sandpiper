@@ -11,7 +11,7 @@ RUN apk add \
   libxml2-dev \
   libxslt-dev \
   linux-headers \
-  r-base
+  R
 
 COPY . /opt/wps
 
