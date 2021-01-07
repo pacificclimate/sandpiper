@@ -12,6 +12,8 @@ RUN apk add \
   libxslt-dev \
   linux-headers
 
+RUN apt-get install -y r-base
+
 COPY . /opt/wps
 
 WORKDIR /opt/wps
