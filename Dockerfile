@@ -7,7 +7,8 @@ ENV PIP_INDEX_URL="https://pypi.pacificclimate.org/simple/"
 ENV THREDDS_URL_ROOT="https://docker-dev03.pcic.uvic.ca/twitcher/ows/proxy/thredds/dodsC/datasets"
 
 # Update system
-RUN apk add \
+RUN apk upgrade --update && \
+  apk add \
   libxml2-dev \
   libxslt-dev \
   linux-headers \
@@ -47,7 +48,7 @@ ENV BUILD_DEPS \
     tk-dev \
     libffi-dev
 
-RUN apk add .build-deps $BUILD_DEPS && \
+RUN apk add --virtual .build-deps $BUILD_DEPS && \
     apk add R R-dev && \
     apk del .build-deps
 
