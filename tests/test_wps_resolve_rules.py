@@ -1,7 +1,7 @@
 import pytest
 from pkg_resources import resource_filename
 
-from wps_tools.testing import run_wps_process
+from wps_tools.testing import run_wps_process, local_path
 from sandpiper.processes.wps_resolve_rules import ResolveRules
 
 
@@ -19,7 +19,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
     ),
     [
         (
-            resource_filename("tests", "data/rules_small.csv"),
+            local_path("rules_small.csv"),
             "2050",
             "vancouver_island",
             "http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
@@ -29,7 +29,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
             "INFO",
         ),
         (
-            resource_filename("tests", "data/rules_small.csv"),
+            local_path("rules_small.csv"),
             "2050",
             "vancouver_island",
             "http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
@@ -52,7 +52,7 @@ def test_wps_resolve_rules(
     log_level,
 ):
     datainputs = (
-        f"csv={csv};"
+        f"csv=@xlink:href={csv};"
         f"date_range={date_range};"
         f"region={region};"
         f"geoserver={geoserver};"
