@@ -1,4 +1,4 @@
-from pywps import Process, LiteralInput, LiteralOutput
+from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, FORMATS
 from pywps.app.Common import Metadata
 from functools import partial
 import json
@@ -6,7 +6,7 @@ import json
 from p2a_impacts.fetch_data import get_dict_val
 from p2a_impacts.evaluator import evaluate_rule
 from wps_tools.logging import log_handler
-from wps_tools.io import log_level
+from wps_tools.io import log_level, collect_args
 from sandpiper.utils import logger
 
 
@@ -25,17 +25,17 @@ class EvaluateRule(Process):
             LiteralInput(
                 "rule", "Rule", abstract="Rule expression", data_type="string",
             ),
-            LiteralInput(
+            ComplexInput(
                 "parse_tree",
                 "Parse Tree Dictionary",
                 abstract="File path to dictionary used for rule getter function",
-                data_type="string",
+                supported_formats=[FORMATS.JSON],
             ),
-            LiteralInput(
+            ComplexInput(
                 "variables",
                 "Variable Dictionary",
                 abstract="File path to dictionary used for variables",
-                data_type="string",
+                supported_formats=[FORMATS.JSON],
             ),
             log_level,
         ]
@@ -68,7 +68,10 @@ class EvaluateRule(Process):
         )
 
     def _handler(self, request, response):
-        loglevel = request.inputs["loglevel"][0].data
+        rule, parse_tree_path, variables_path, loglevel = [
+            arg[0] for arg in collect_args(request, self.workdir).values()
+        ]
+
         log_handler(
             self,
             response,
@@ -77,10 +80,6 @@ class EvaluateRule(Process):
             log_level=loglevel,
             process_step="start",
         )
-
-        rule = request.inputs["rule"][0].data
-        parse_tree_path = request.inputs["parse_tree"][0].data
-        variables_path = request.inputs["variables"][0].data
 
         with open(parse_tree_path) as json_file:
             parse_tree = json.load(json_file)
