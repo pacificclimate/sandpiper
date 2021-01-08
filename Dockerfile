@@ -11,7 +11,45 @@ RUN apk add \
   libxml2-dev \
   libxslt-dev \
   linux-headers \
-  R
+  # R/Rpy2 dependencies (for wps-tools)
+  # based on https://hub.docker.com/r/achillesrasquinha/rpy2/dockerfile
+  gcc \
+  gfortran \
+  g++ \
+  make \
+  readline-dev \
+  icu-dev \
+  bzip2-dev \
+  xz-dev \
+  pcre-dev \
+  libjpeg-turbo-dev \
+  libpng-dev \
+  tiff-dev  \
+  curl-dev \
+  zip \
+  file \
+  coreutils \
+  musl-dev \
+  libffi-dev \
+  python3-dev \
+  py3-pip \
+  bash
+
+# R build dependencies
+# based on https://hub.docker.com/r/achillesrasquinha/rpy2/dockerfile
+ENV BUILD_DEPS \
+    cairo-dev \
+    libxmu-dev \
+    openjdk8-jre-base \
+    pango-dev \
+    perl \
+    tiff-dev \
+    tk-dev \
+    libffi-dev
+
+RUN apk add .build-deps $BUILD_DEPS && \
+    apk add R R-dev && \
+    apk del .build-deps
 
 COPY . /opt/wps
 
