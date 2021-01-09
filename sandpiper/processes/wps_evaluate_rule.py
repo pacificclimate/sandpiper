@@ -5,8 +5,8 @@ import json
 
 from p2a_impacts.fetch_data import get_dict_val
 from p2a_impacts.evaluator import evaluate_rule
-from wps_tools.utils import log_handler, collect_args
-from wps_tools.io import log_level
+from wps_tools.logging import log_handler
+from wps_tools.io import log_level, collect_args
 from sandpiper.utils import logger
 
 

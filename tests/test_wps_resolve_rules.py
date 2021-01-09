@@ -19,7 +19,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
     ),
     [
         (
-            local_path("rules_small.csv"),
+            resource_filename("tests", "data/rules_small.csv"),
             "2050",
             "vancouver_island",
             "http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
@@ -29,7 +29,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
             "INFO",
         ),
         (
-            local_path("rules_small.csv"),
+            resource_filename("tests", "data/rules_small.csv"),
             "2050",
             "vancouver_island",
             "http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
@@ -51,14 +51,15 @@ def test_wps_resolve_rules(
     thredds,
     log_level,
 ):
-    datainputs = (
-        f"csv=@xlink:href={csv};"
-        f"date_range={date_range};"
-        f"region={region};"
-        f"geoserver={geoserver};"
-        f"connection_string={connection_string};"
-        f"ensemble={ensemble};"
-        f"thredds={thredds};"
-        f"log_level={log_level};"
-    )
-    run_wps_process(ResolveRules(), datainputs)
+    with open(csv, "r") as csv_file:
+        datainputs = (
+            f"csv_content={csv_file.read()};"
+            f"date_range={date_range};"
+            f"region={region};"
+            f"geoserver={geoserver};"
+            f"connection_string={connection_string};"
+            f"ensemble={ensemble};"
+            f"thredds={thredds};"
+            f"log_level={log_level};"
+        )
+        run_wps_process(ResolveRules(), datainputs)
