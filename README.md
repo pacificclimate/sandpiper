@@ -1,4 +1,4 @@
-# Thunderbird
+# Sandpiper
 ![Docker Publishing](https://github.com/pacificclimate/sandpiper/workflows/Docker%20Publishing/badge.svg)
 ![Python CI](https://github.com/pacificclimate/sandpiper/workflows/Python%20CI/badge.svg)
 
