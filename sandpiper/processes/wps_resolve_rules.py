@@ -158,7 +158,9 @@ class ResolveRules(Process):
                     loglevel,
                 )
             except UnboundLocalError as e:
-                raise ProcessError(f"{type(e).__name__}: Error while collecting variables")
+                raise ProcessError(
+                    f"{type(e).__name__}: Error while collecting variables"
+                )
             except Exception as e:
                 raise ProcessError(f"{type(e).__name__}: {e}")
 

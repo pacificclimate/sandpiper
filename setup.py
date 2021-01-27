@@ -49,18 +49,9 @@ setup(
     license="GNU General Public License v3",
     keywords="wps pywps birdhouse sandpiper",
     packages=find_packages(),
-    package_data={
-        "sandpiper": ["tests/data/*.nc"],
-        "tests": ["data/*.nc"],
-    },
+    package_data={"sandpiper": ["tests/data/*.nc"], "tests": ["data/*.nc"],},
     include_package_data=True,
     install_requires=reqs,
-    extras_require={
-        "dev": dev_reqs,
-    },  # pip install ".[dev]"
-    entry_points={
-        "console_scripts": [
-            "sandpiper=sandpiper.cli:cli",
-        ]
-    },
+    extras_require={"dev": dev_reqs,},  # pip install ".[dev]"
+    entry_points={"console_scripts": ["sandpiper=sandpiper.cli:cli",]},
 )

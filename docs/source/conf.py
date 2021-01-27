@@ -232,13 +232,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (
-        master_doc,
-        "sandpiper.tex",
-        "sandpiper Documentation",
-        "Nikola Rados",
-        "manual",
-    ),
+    (master_doc, "sandpiper.tex", "sandpiper Documentation", "Nikola Rados", "manual",),
 ]
 
 
@@ -246,15 +240,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (
-        master_doc,
-        "sandpiper",
-        "sandpiper Documentation",
-        [author],
-        1,
-    )
-]
+man_pages = [(master_doc, "sandpiper", "sandpiper Documentation", [author], 1,)]
 
 
 # -- Options for Texinfo output ----------------------------------------
