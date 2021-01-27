@@ -1,15 +1,14 @@
-from pywps import Process, LiteralInput, ComplexInput, ComplexOutput, FORMATS, Format
-from pywps.app.exceptions import ProcessError
-from pywps.app.Common import Metadata
-from tempfile import NamedTemporaryFile
 import json
 import os
+from tempfile import NamedTemporaryFile
+from pywps import Process, LiteralInput, ComplexInput, ComplexOutput, FORMATS, Format
+from pywps.app.Common import Metadata
 
 from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level, collect_args
-from sandpiper.utils import logger
+from sandpiper.utils import logger, custom_process_error
 
 
 class ResolveRules(Process):
@@ -157,12 +156,8 @@ class ResolveRules(Process):
                     thredds,
                     loglevel,
                 )
-            except UnboundLocalError as e:
-                raise ProcessError(
-                    f"{type(e).__name__}: Error while collecting variables"
-                )
             except Exception as e:
-                raise ProcessError(f"{type(e).__name__}: {e}")
+                custom_process_error(e)
 
         log_handler(
             self,
