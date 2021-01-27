@@ -24,10 +24,7 @@ class EvaluateRule(Process):
 
         inputs = [
             LiteralInput(
-                "rule",
-                "Rule",
-                abstract="Rule expression",
-                data_type="string",
+                "rule", "Rule", abstract="Rule expression", data_type="string",
             ),
             ComplexInput(
                 "parse_tree",

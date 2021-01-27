@@ -4,15 +4,11 @@ from tempfile import NamedTemporaryFile
 
 from wps_tools.testing import run_wps_process, local_path
 from sandpiper.processes.wps_evaluate_rule import EvaluateRule
-from .utils import process_err_test
+from sandpiper.utils import process_err_test
 
 
 @pytest.mark.parametrize(
-    (
-        "rule",
-        "parse_tree",
-        "variables",
-    ),
+    ("rule", "parse_tree", "variables",),
     [
         (
             "rule_snow",
@@ -31,16 +27,7 @@ def test_wps_evaluate_rule(rule, parse_tree, variables):
 
 
 @pytest.mark.parametrize(
-    (
-        "rule",
-        "parse_tree",
-    ),
-    [
-        (
-            "rule_snow",
-            local_path("parse_tree.json"),
-        ),
-    ],
+    ("rule", "parse_tree",), [("rule_snow", local_path("parse_tree.json"),),],
 )
 def test_file_err(rule, parse_tree):
     with NamedTemporaryFile(
@@ -55,11 +42,7 @@ def test_file_err(rule, parse_tree):
 
 
 @pytest.mark.parametrize(
-    (
-        "rule",
-        "parse_tree",
-        "variables",
-    ),
+    ("rule", "parse_tree", "variables",),
     [
         (
             "rule_snow",
