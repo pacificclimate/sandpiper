@@ -83,16 +83,16 @@ class EvaluateRule(Process):
         )
 
         try:
-            file_ = "parse tree"
             with open(parse_tree_path) as json_file:
                 parse_tree = json.load(json_file)
+        except (TypeError, json.JSONDecodeError) as e:
+            raise ProcessError(f"{type(e).__name__}: Invalid parse tree file. {e}")
 
-            file_ = "variables"
+        try:
             with open(variables_path) as json_file:
                 collected_variables = json.load(json_file)
-
         except (TypeError, json.JSONDecodeError) as e:
-            raise ProcessError(f"{type(e).__name__}: Invalid {file_} file. {e}")
+            raise ProcessError(f"{type(e).__name__}: Invalid variables file. {e}")
 
         variable_getter = partial(get_dict_val, collected_variables)
         rule_getter = partial(get_dict_val, parse_tree)
