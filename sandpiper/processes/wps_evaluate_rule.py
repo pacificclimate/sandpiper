@@ -1,5 +1,6 @@
 from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, FORMATS
 from pywps.app.Common import Metadata
+from pywps.app.exceptions import ProcessError
 from functools import partial
 import json
 
@@ -81,10 +82,17 @@ class EvaluateRule(Process):
             process_step="start",
         )
 
-        with open(parse_tree_path) as json_file:
-            parse_tree = json.load(json_file)
-        with open(variables_path) as json_file:
-            collected_variables = json.load(json_file)
+        try:
+            with open(parse_tree_path) as json_file:
+                parse_tree = json.load(json_file)
+        except (TypeError, json.JSONDecodeError) as e:
+            raise ProcessError(f"{type(e).__name__}: Invalid parse tree file. {e}")
+
+        try:
+            with open(variables_path) as json_file:
+                collected_variables = json.load(json_file)
+        except (TypeError, json.JSONDecodeError) as e:
+            raise ProcessError(f"{type(e).__name__}: Invalid variables file. {e}")
 
         variable_getter = partial(get_dict_val, collected_variables)
         rule_getter = partial(get_dict_val, parse_tree)
@@ -98,7 +106,15 @@ class EvaluateRule(Process):
             process_step="process",
         )
 
-        truth_value = evaluate_rule(rule, rule_getter, variable_getter)
+        try:
+            truth_value = evaluate_rule(rule, rule_getter, variable_getter)
+        except NotImplementedError as e:
+            raise ProcessError(
+                f"{type(e).__name__}: Unable to process expression "
+                "because it contains invalid characters"
+            )
+        except Exception as e:
+            raise ProcessError(f"{type(e).__name__}: {e}")
 
         log_handler(
             self,

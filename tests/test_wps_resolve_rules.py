@@ -1,7 +1,7 @@
 import pytest
 from pkg_resources import resource_filename
 
-from wps_tools.testing import run_wps_process, local_path
+from wps_tools.testing import run_wps_process
 from sandpiper.processes.wps_resolve_rules import ResolveRules
 
 
@@ -15,7 +15,6 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
         "connection_string",
         "ensemble",
         "thredds",
-        "log_level",
     ),
     [
         (
@@ -26,7 +25,6 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
             "postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
             "p2a_rules",
             "False",
-            "INFO",
         ),
         (
             resource_filename("tests", "data/rules_small.csv"),
@@ -36,7 +34,6 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
             "postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
             "p2a_rules",
             "True",
-            "INFO",
         ),
     ],
 )
@@ -49,7 +46,6 @@ def test_wps_resolve_rules(
     connection_string,
     ensemble,
     thredds,
-    log_level,
 ):
     with open(csv, "r") as csv_file:
         datainputs = (
@@ -60,6 +56,5 @@ def test_wps_resolve_rules(
             f"connection_string={connection_string};"
             f"ensemble={ensemble};"
             f"thredds={thredds};"
-            f"log_level={log_level};"
         )
         run_wps_process(ResolveRules(), datainputs)

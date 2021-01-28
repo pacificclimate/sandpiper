@@ -1,5 +1,7 @@
 from pywps import Process, LiteralInput, LiteralOutput
 from pywps.app.Common import Metadata
+from pywps.app.exceptions import ProcessError
+
 from p2a_impacts.parser import build_parse_tree
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level
@@ -88,7 +90,17 @@ class Parser(Process):
             process_step="process",
         )
 
-        parse_tree, vars, region_var = build_parse_tree(condition)
+        try:
+            parse_tree, vars, region_var = build_parse_tree(condition)
+        except SyntaxError as e:
+            raise ProcessError(f"{type(e).__name__}: Invalid syntax in condition")
+        except ValueError as e:
+            raise ProcessError(
+                f"{type(e).__name__}: variable name should have 5 values, variable, "
+                "time_of_year, temporal, spatial, and percentile"
+            )
+        except Exception as e:
+            raise ProcessError(f"{type(e).__name__}: {e}")
 
         log_handler(
             self,

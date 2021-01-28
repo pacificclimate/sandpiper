@@ -1,13 +1,14 @@
-from pywps import Process, LiteralInput, ComplexInput, ComplexOutput, FORMATS, Format
-from pywps.app.Common import Metadata
 import json
 import os
+from tempfile import NamedTemporaryFile
+from pywps import Process, LiteralInput, ComplexOutput, FORMATS
+from pywps.app.Common import Metadata
+
 from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level, collect_args
-from sandpiper.utils import logger
-from tempfile import NamedTemporaryFile
+from sandpiper.utils import logger, custom_process_error
 
 
 class ResolveRules(Process):
@@ -145,16 +146,18 @@ class ResolveRules(Process):
                 log_level=loglevel,
                 process_step="process",
             )
-
-            resolved = resolve_rules(
-                temp_rules.name,
-                date_range,
-                get_region(region, geoserver),
-                ensemble,
-                connection_string,
-                thredds,
-                loglevel,
-            )
+            try:
+                resolved = resolve_rules(
+                    temp_rules.name,
+                    date_range,
+                    get_region(region, geoserver),
+                    ensemble,
+                    connection_string,
+                    thredds,
+                    loglevel,
+                )
+            except Exception as e:
+                custom_process_error(e)
 
         log_handler(
             self,
