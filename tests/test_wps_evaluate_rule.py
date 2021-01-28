@@ -1,5 +1,4 @@
 import pytest
-import json
 from tempfile import NamedTemporaryFile
 
 from wps_tools.testing import run_wps_process, local_path

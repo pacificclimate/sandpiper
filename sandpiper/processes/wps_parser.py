@@ -1,4 +1,3 @@
-import re
 from pywps import Process, LiteralInput, LiteralOutput
 from pywps.app.Common import Metadata
 from pywps.app.exceptions import ProcessError

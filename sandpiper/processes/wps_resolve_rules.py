@@ -1,7 +1,7 @@
 import json
 import os
 from tempfile import NamedTemporaryFile
-from pywps import Process, LiteralInput, ComplexInput, ComplexOutput, FORMATS, Format
+from pywps import Process, LiteralInput, ComplexOutput, FORMATS
 from pywps.app.Common import Metadata
 
 from p2a_impacts.resolver import resolve_rules

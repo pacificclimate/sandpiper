@@ -1,7 +1,7 @@
 import pytest
 from pkg_resources import resource_filename
 
-from wps_tools.testing import run_wps_process, local_path
+from wps_tools.testing import run_wps_process
 from sandpiper.processes.wps_resolve_rules import ResolveRules
 
 
