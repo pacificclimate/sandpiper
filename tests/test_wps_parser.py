@@ -1,8 +1,7 @@
 import pytest
 
-from wps_tools.testing import run_wps_process
+from wps_tools.testing import run_wps_process, process_err_test
 from sandpiper.processes.wps_parser import Parser
-from sandpiper.utils import process_err_test
 
 
 # Any logical conditions with "=" do not work in this test for some unknown reason

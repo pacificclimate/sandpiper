@@ -8,7 +8,8 @@ from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level, collect_args
-from sandpiper.utils import logger, custom_process_error
+from wps_tools.error_handling import custom_process_error
+from sandpiper.utils import logger
 
 
 class ResolveRules(Process):
