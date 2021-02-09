@@ -1,5 +1,13 @@
 # Changes
 
+## 1.4.0
+*2021-02-09*
+
+* Use Complex Input for file input
+* Add `wps_tools.output_handling` tools to demos
+* Build documentation
+* Add `ProcessError`s
+
 ## 1.3.1
 *2020-12-22*
 
