@@ -24,7 +24,12 @@ class EvaluateRule(Process):
 
         inputs = [
             LiteralInput(
-                "rule", "Rule", abstract="Rule expression", data_type="string",
+                "rule",
+                "Rule",
+                abstract="Rule expression",
+                min_occurs=1,
+                max_occurs=100,
+                data_type="string",
             ),
             ComplexInput(
                 "parse_tree",
@@ -43,10 +48,10 @@ class EvaluateRule(Process):
 
         outputs = [
             LiteralOutput(
-                "truth_value",
-                "Truth Value",
-                abstract="Truth value of a parse tree",
-                data_type="boolean",
+                "truth_values",
+                "Truth Value Dictionary",
+                abstract="Truth value of a parse tree for each rule",
+                data_type="string",
             ),
         ]
 
@@ -69,27 +74,27 @@ class EvaluateRule(Process):
         )
 
     def _handler(self, request, response):
-        rule, parse_tree_path, variables_path, loglevel = [
-            arg[0] for arg in collect_args(request, self.workdir).values()
-        ]
+        rules, parse_tree_path, variables_path, loglevel = collect_args(
+            request, self.workdir
+        ).values()
 
         log_handler(
             self,
             response,
             "Starting Process",
             logger,
-            log_level=loglevel,
+            log_level=loglevel[0],
             process_step="start",
         )
 
         try:
-            with open(parse_tree_path) as json_file:
+            with open(parse_tree_path[0]) as json_file:
                 parse_tree = json.load(json_file)
         except (TypeError, json.JSONDecodeError) as e:
             raise ProcessError(f"{type(e).__name__}: Invalid parse tree file. {e}")
 
         try:
-            with open(variables_path) as json_file:
+            with open(variables_path[0]) as json_file:
                 collected_variables = json.load(json_file)
         except (TypeError, json.JSONDecodeError) as e:
             raise ProcessError(f"{type(e).__name__}: Invalid variables file. {e}")
@@ -102,37 +107,40 @@ class EvaluateRule(Process):
             response,
             "Evaluating expression",
             logger,
-            log_level=loglevel,
+            log_level=loglevel[0],
             process_step="process",
         )
+        truth_values = {}
 
-        try:
-            truth_value = evaluate_rule(rule, rule_getter, variable_getter)
-        except NotImplementedError as e:
-            raise ProcessError(
-                f"{type(e).__name__}: Unable to process expression "
-                "because it contains invalid characters"
-            )
-        except Exception as e:
-            raise ProcessError(f"{type(e).__name__}: {e}")
+        for rule in rules:
+            try:
+                truth_value = evaluate_rule(rule, rule_getter, variable_getter)
+                truth_values[rule] = truth_value
+            except NotImplementedError as e:
+                raise ProcessError(
+                    f"{type(e).__name__}: Unable to process expression "
+                    "because it contains invalid characters"
+                )
+            except Exception as e:
+                raise ProcessError(f"{type(e).__name__}: {e}")
 
         log_handler(
             self,
             response,
             "Cleaning and building final output",
             logger,
-            log_level=loglevel,
+            log_level=loglevel[0],
             process_step="build_output",
         )
 
-        response.outputs["truth_value"].data = truth_value
+        response.outputs["truth_values"].data = truth_values
 
         log_handler(
             self,
             response,
             "Process Complete",
             logger,
-            log_level=loglevel,
+            log_level=loglevel[0],
             process_step="complete",
         )
         return response

@@ -5,19 +5,35 @@ from wps_tools.testing import run_wps_process, local_path, process_err_test
 from sandpiper.processes.wps_evaluate_rule import EvaluateRule
 
 
+def build_rule_input(rules):
+    if isinstance(rules, str):  # Single input
+        return f"rule={rules};"
+    else:
+        rule_input = ""
+        for rule in rules:
+            rule_input += f"rule={rule};"
+        return rule_input
+
+
 @pytest.mark.parametrize(
-    ("rule", "parse_tree", "variables",),
+    ("rules", "parse_tree", "variables",),
     [
         (
             "rule_snow",
             local_path("parse_tree.json"),
             local_path("collected_variables.json"),
         ),
+        (
+            ["rule_snow", "rule_rain", "rule_hybrid"],
+            local_path("parse_tree.json"),
+            local_path("collected_variables.json"),
+        ),
     ],
 )
-def test_wps_evaluate_rule(rule, parse_tree, variables):
+def test_wps_evaluate_rule(rules, parse_tree, variables):
     datainputs = (
-        f"rule={rule};"
+        # rewrite to accept list (see quail)
+        f"{build_rule_input(rules)}"
         f"parse_tree=@xlink:href={parse_tree};"
         f"variables=@xlink:href={variables};"
     )
@@ -25,14 +41,14 @@ def test_wps_evaluate_rule(rule, parse_tree, variables):
 
 
 @pytest.mark.parametrize(
-    ("rule", "parse_tree",), [("rule_snow", local_path("parse_tree.json"),),],
+    ("rules", "parse_tree",), [("rule_snow", local_path("parse_tree.json"),),],
 )
-def test_file_err(rule, parse_tree):
+def test_file_err(rules, parse_tree):
     with NamedTemporaryFile(
         suffix=".json", prefix="tmp_copy", dir="/tmp", delete=True
     ) as var_file:
         datainputs = (
-            f"rule={rule};"
+            f"{build_rule_input(rules)}"
             f"parse_tree=@xlink:href={parse_tree};"
             f"variables={var_file.name};"
         )
@@ -40,7 +56,7 @@ def test_file_err(rule, parse_tree):
 
 
 @pytest.mark.parametrize(
-    ("rule", "parse_tree", "variables",),
+    ("rules", "parse_tree", "variables",),
     [
         (
             "rule_snow",
@@ -49,9 +65,9 @@ def test_file_err(rule, parse_tree):
         ),
     ],
 )
-def test_parse_string_err(rule, parse_tree, variables):
+def test_parse_string_err(rules, parse_tree, variables):
     datainputs = (
-        f"rule={rule};"
+        f"{build_rule_input(rules)}"
         f"parse_tree=@xlink:href={parse_tree};"
         f"variables=@xlink:href={variables};"
     )
