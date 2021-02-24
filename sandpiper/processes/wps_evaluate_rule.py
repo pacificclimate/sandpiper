@@ -24,9 +24,9 @@ class EvaluateRule(Process):
 
         inputs = [
             LiteralInput(
-                "rule",
-                "Rule",
-                abstract="Rule expression",
+                "rules",
+                "Rules",
+                abstract="Rule expressions",
                 min_occurs=1,
                 max_occurs=100,
                 data_type="string",

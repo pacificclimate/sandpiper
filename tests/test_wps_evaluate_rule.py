@@ -7,11 +7,11 @@ from sandpiper.processes.wps_evaluate_rule import EvaluateRule
 
 def build_rule_input(rules):
     if isinstance(rules, str):  # Single input
-        return f"rule={rules};"
+        return f"rules={rules};"
     else:
         rule_input = ""
         for rule in rules:
-            rule_input += f"rule={rule};"
+            rule_input += f"rules={rule};"
         return rule_input
 
 
