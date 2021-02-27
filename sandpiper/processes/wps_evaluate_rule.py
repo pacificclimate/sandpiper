@@ -74,27 +74,28 @@ class EvaluateRule(Process):
         )
 
     def _handler(self, request, response):
-        rules, parse_tree_path, variables_path, loglevel = collect_args(
-            request, self.workdir
-        ).values()
+        args = collect_args(request, self.workdir)
+        rules, parse_tree_path, variables_path, loglevel = (
+            args[key][0] if key != "rules" else args[key] for key in args.keys()
+        )
 
         log_handler(
             self,
             response,
             "Starting Process",
             logger,
-            log_level=loglevel[0],
+            log_level=loglevel,
             process_step="start",
         )
 
         try:
-            with open(parse_tree_path[0]) as json_file:
+            with open(parse_tree_path) as json_file:
                 parse_tree = json.load(json_file)
         except (TypeError, json.JSONDecodeError) as e:
             raise ProcessError(f"{type(e).__name__}: Invalid parse tree file. {e}")
 
         try:
-            with open(variables_path[0]) as json_file:
+            with open(variables_path) as json_file:
                 collected_variables = json.load(json_file)
         except (TypeError, json.JSONDecodeError) as e:
             raise ProcessError(f"{type(e).__name__}: Invalid variables file. {e}")
@@ -107,7 +108,7 @@ class EvaluateRule(Process):
             response,
             "Evaluating expression",
             logger,
-            log_level=loglevel[0],
+            log_level=loglevel,
             process_step="process",
         )
         truth_values = {}
@@ -129,7 +130,7 @@ class EvaluateRule(Process):
             response,
             "Cleaning and building final output",
             logger,
-            log_level=loglevel[0],
+            log_level=loglevel,
             process_step="build_output",
         )
 
@@ -140,7 +141,7 @@ class EvaluateRule(Process):
             response,
             "Process Complete",
             logger,
-            log_level=loglevel[0],
+            log_level=loglevel,
             process_step="complete",
         )
         return response
