@@ -111,19 +111,19 @@ class EvaluateRule(Process):
             log_level=loglevel,
             process_step="process",
         )
-        truth_values = {}
 
-        for rule in rules:
-            try:
-                truth_value = evaluate_rule(rule, rule_getter, variable_getter)
-                truth_values[rule] = truth_value
-            except NotImplementedError as e:
-                raise ProcessError(
-                    f"{type(e).__name__}: Unable to process expression "
-                    "because it contains invalid characters"
-                )
-            except Exception as e:
-                raise ProcessError(f"{type(e).__name__}: {e}")
+        try:
+            truth_values = {
+                rule: evaluate_rule(rule, rule_getter, variable_getter)
+                for rule in rules
+            }
+        except NotImplementedError as e:
+            raise ProcessError(
+                f"{type(e).__name__}: Unable to process expression "
+                "because it contains invalid characters"
+            )
+        except Exception as e:
+            raise ProcessError(f"{type(e).__name__}: {e}")
 
         log_handler(
             self,

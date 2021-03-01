@@ -80,27 +80,27 @@ class Parser(Process):
             log_level=loglevel,
             process_step="process",
         )
-        parsed_vars = {}
 
-        for condition in conditions:
-            try:
+        try:
+            parsed_vars = {}
+            for condition in conditions:
                 parse_tree, vars, region_var = build_parse_tree(condition.data)
                 parsed_vars[condition.data] = {
                     "parse_tree": parse_tree,
                     "variables": vars,
                     "region_variable": region_var,
                 }
-            except SyntaxError as e:
-                raise ProcessError(
-                    f"{type(e).__name__}: Invalid syntax in condition {conditions.index(condition)}"
-                )
-            except ValueError as e:
-                raise ProcessError(
-                    f"{type(e).__name__}: variable name should have 5 values, variable, "
-                    "time_of_year, temporal, spatial, and percentile"
-                )
-            except Exception as e:
-                raise ProcessError(f"{type(e).__name__}: {e}")
+        except SyntaxError as e:
+            raise ProcessError(
+                f"{type(e).__name__}: Invalid syntax in condition {conditions.index(condition)}"
+            )
+        except ValueError as e:
+            raise ProcessError(
+                f"{type(e).__name__}: variable name should have 5 values, variable, "
+                "time_of_year, temporal, spatial, and percentile"
+            )
+        except Exception as e:
+            raise ProcessError(f"{type(e).__name__}: {e}")
 
         log_handler(
             self,
