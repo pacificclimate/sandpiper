@@ -24,7 +24,12 @@ class EvaluateRule(Process):
 
         inputs = [
             LiteralInput(
-                "rule", "Rule", abstract="Rule expression", data_type="string",
+                "rules",
+                "Rules",
+                abstract="Rule expressions",
+                min_occurs=1,
+                max_occurs=100,
+                data_type="string",
             ),
             ComplexInput(
                 "parse_tree",
@@ -43,10 +48,10 @@ class EvaluateRule(Process):
 
         outputs = [
             LiteralOutput(
-                "truth_value",
-                "Truth Value",
-                abstract="Truth value of a parse tree",
-                data_type="boolean",
+                "truth_values",
+                "Truth Value Dictionary",
+                abstract="Truth value of a parse tree for each rule",
+                data_type="string",
             ),
         ]
 
@@ -69,9 +74,10 @@ class EvaluateRule(Process):
         )
 
     def _handler(self, request, response):
-        rule, parse_tree_path, variables_path, loglevel = [
-            arg[0] for arg in collect_args(request, self.workdir).values()
-        ]
+        args = collect_args(request, self.workdir)
+        rules, parse_tree_path, variables_path, loglevel = (
+            args[key][0] if key != "rules" else args[key] for key in args.keys()
+        )
 
         log_handler(
             self,
@@ -107,7 +113,10 @@ class EvaluateRule(Process):
         )
 
         try:
-            truth_value = evaluate_rule(rule, rule_getter, variable_getter)
+            truth_values = {
+                rule: evaluate_rule(rule, rule_getter, variable_getter)
+                for rule in rules
+            }
         except NotImplementedError as e:
             raise ProcessError(
                 f"{type(e).__name__}: Unable to process expression "
@@ -125,7 +134,7 @@ class EvaluateRule(Process):
             process_step="build_output",
         )
 
-        response.outputs["truth_value"].data = truth_value
+        response.outputs["truth_values"].data = truth_values
 
         log_handler(
             self,
