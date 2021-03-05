@@ -1,3 +1,5 @@
+import os
+import json
 from pywps import Process, LiteralInput, LiteralOutput
 from pywps.app.Common import Metadata
 from pywps.app.exceptions import ProcessError
@@ -5,6 +7,7 @@ from pywps.app.exceptions import ProcessError
 from p2a_impacts.parser import build_parse_tree
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level
+from sandpiper.io import json_output
 from sandpiper.utils import logger
 
 
@@ -31,15 +34,7 @@ class Parser(Process):
             log_level,
         ]
 
-        outputs = [
-            LiteralOutput(
-                "parsed_vars",
-                "Parsed variables dictionary",
-                abstract="Dictionary containing the parse tree, variables, "
-                "and region variable generated from each condition.",
-                data_type="string",
-            ),
-        ]
+        outputs = [json_output]
 
         super(Parser, self).__init__(
             self._handler,
@@ -111,7 +106,11 @@ class Parser(Process):
             process_step="build_output",
         )
 
-        response.outputs["parsed_vars"].data = parsed_vars
+        filepath = os.path.join(self.workdir, "parsed_vars.json")
+        with open(filepath, "w") as f:
+            json.dump(parsed_vars, f)
+
+        response.outputs["json"].file = filepath
 
         log_handler(
             self,
