@@ -1,7 +1,7 @@
 import json
 import os
 from tempfile import NamedTemporaryFile
-from pywps import Process, LiteralInput, ComplexOutput, FORMATS
+from pywps import Process, LiteralInput, ComplexInput, ComplexOutput, FORMATS, Format
 from pywps.app.Common import Metadata
 
 from p2a_impacts.resolver import resolve_rules
@@ -23,13 +23,16 @@ class ResolveRules(Process):
             "complete": 100,
         }
         inputs = [
-            LiteralInput(
-                "csv_content",
-                "CSV content",
-                abstract="Contents of the 'rules' CSV file",
+            ComplexInput(
+                "csv_file",
+                "CSV file",
+                abstract="The 'rules' CSV file",
                 min_occurs=1,
                 max_occurs=1,
-                data_type="string",
+                supported_formats=[
+                    Format("text/plain", encoding="us-ascii"),
+                    Format("text/csv", encoding="us-ascii"),
+                ],
             ),
             LiteralInput(
                 "date_range",
@@ -116,7 +119,7 @@ class ResolveRules(Process):
 
     def _handler(self, request, response):
         (
-            rules,
+            csv_file,
             date_range,
             region,
             geoserver,
@@ -135,30 +138,27 @@ class ResolveRules(Process):
             process_step="start",
         )
 
-        with NamedTemporaryFile(mode="w+", suffix=".csv") as temp_rules:
-            temp_rules.write(rules)
-            temp_rules.seek(0)
+        log_handler(
+            self,
+            response,
+            "Resolving impacts rules",
+            logger,
+            log_level=loglevel,
+            process_step="process",
+        )
 
-            log_handler(
-                self,
-                response,
-                "Resolving impacts rules",
-                logger,
-                log_level=loglevel,
-                process_step="process",
+        try:
+            resolved = resolve_rules(
+                csv_file,
+                date_range,
+                get_region(region, geoserver),
+                ensemble,
+                connection_string,
+                thredds,
+                loglevel,
             )
-            try:
-                resolved = resolve_rules(
-                    temp_rules.name,
-                    date_range,
-                    get_region(region, geoserver),
-                    ensemble,
-                    connection_string,
-                    thredds,
-                    loglevel,
-                )
-            except Exception as e:
-                custom_process_error(e)
+        except Exception as e:
+            custom_process_error(e)
 
         log_handler(
             self,
