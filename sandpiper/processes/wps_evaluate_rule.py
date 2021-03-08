@@ -1,13 +1,15 @@
+import os
+import json
 from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, FORMATS
 from pywps.app.Common import Metadata
 from pywps.app.exceptions import ProcessError
 from functools import partial
-import json
 
 from p2a_impacts.fetch_data import get_dict_val
 from p2a_impacts.evaluator import evaluate_rule
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level, collect_args
+from sandpiper.io import json_output
 from sandpiper.utils import logger
 
 
@@ -46,14 +48,7 @@ class EvaluateRule(Process):
             log_level,
         ]
 
-        outputs = [
-            LiteralOutput(
-                "truth_values",
-                "Truth Value Dictionary",
-                abstract="Truth value of a parse tree for each rule",
-                data_type="string",
-            ),
-        ]
+        outputs = [json_output]
 
         super(EvaluateRule, self).__init__(
             self._handler,
@@ -134,7 +129,11 @@ class EvaluateRule(Process):
             process_step="build_output",
         )
 
-        response.outputs["truth_values"].data = truth_values
+        filepath = os.path.join(self.workdir, "truth_values.json")
+        with open(filepath, "w") as f:
+            json.dump(truth_values, f)
+
+        response.outputs["json"].file = filepath
 
         log_handler(
             self,
