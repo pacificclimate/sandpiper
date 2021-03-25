@@ -1,5 +1,11 @@
 # Changes
 
+## 1.5.0
+*2021-03-25*
+
+* Accept multiple inputs
+* Rework notebook result collection
+
 ## 1.4.0
 *2021-02-09*
 
