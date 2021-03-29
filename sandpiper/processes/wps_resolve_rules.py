@@ -64,7 +64,7 @@ class ResolveRules(Process):
                 abstract="Database connection string",
                 min_occurs=1,
                 max_occurs=1,
-                default="postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
+                default="",
                 data_type="string",
             ),
             LiteralInput(
@@ -125,6 +125,9 @@ class ResolveRules(Process):
             thredds,
             loglevel,
         ) = [arg[0] for arg in collect_args(request, self.workdir).values()]
+
+        if not connection_string:
+            connection_string = os.environ.get("CONNECTION_STRING")
 
         log_handler(
             self,
