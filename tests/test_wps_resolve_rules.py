@@ -12,7 +12,6 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
         "date_range",
         "region",
         "geoserver",
-        "connection_string",
         "ensemble",
         "thredds",
     ),
@@ -22,7 +21,6 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
             "2050",
             "vancouver_island",
             "http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
-            "postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
             "p2a_rules",
             "False",
         ),
@@ -31,7 +29,6 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
             "2050",
             "vancouver_island",
             "http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
-            "postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
             "p2a_rules",
             "True",
         ),
@@ -43,7 +40,6 @@ def test_wps_resolve_rules(
     date_range,
     region,
     geoserver,
-    connection_string,
     ensemble,
     thredds,
 ):
@@ -53,7 +49,6 @@ def test_wps_resolve_rules(
             f"date_range={date_range};"
             f"region={region};"
             f"geoserver={geoserver};"
-            f"connection_string={connection_string};"
             f"ensemble={ensemble};"
             f"thredds={thredds};"
         )
