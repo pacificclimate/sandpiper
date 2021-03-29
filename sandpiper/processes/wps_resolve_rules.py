@@ -1,7 +1,7 @@
 import json
 import os
 from tempfile import NamedTemporaryFile
-from pywps import Process, LiteralInput, ComplexOutput, FORMATS
+from pywps import Process, LiteralInput, ComplexInput, ComplexOutput, FORMATS
 from pywps.app.Common import Metadata
 
 from p2a_impacts.resolver import resolve_rules
@@ -23,14 +23,19 @@ class ResolveRules(Process):
             "complete": 100,
         }
         inputs = [
-            LiteralInput(
-                "csv_content",
-                "CSV content",
-                abstract="Contents of the 'rules' CSV file",
-                min_occurs=1,
-                max_occurs=1,
-                data_type="string",
-            ),
+            ComplexInput(
+                'csv',
+                'CSV document',
+                abstract='A CSV document',
+                supported_formats=[Format('text/csv', extension='.csv'), FORMATS.TEXT]),
+            # LiteralInput(
+            #     "csv_content",
+            #     "CSV content",
+            #     abstract="Contents of the 'rules' CSV file",
+            #     min_occurs=1,
+            #     max_occurs=1,
+            #     data_type="string",
+            # ),
             LiteralInput(
                 "date_range",
                 "Date Range",
