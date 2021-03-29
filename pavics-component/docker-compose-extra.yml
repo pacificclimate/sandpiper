@@ -3,6 +3,8 @@ services:
   sandpiper:
     image: ${SANDPIPER_IMAGE}
     container_name: sandpiper
+    env_file:
+      - ../deployment.env
     environment:
       - PYWPS_CFG=/wps.cfg
     ports:
