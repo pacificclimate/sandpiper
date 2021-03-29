@@ -1,6 +1,6 @@
 import os
 import json
-from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, FORMATS
+from pywps import Process, LiteralInput, ComplexInput, FORMATS
 from pywps.app.Common import Metadata
 from pywps.app.exceptions import ProcessError
 from functools import partial
