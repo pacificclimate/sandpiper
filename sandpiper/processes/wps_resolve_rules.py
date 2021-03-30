@@ -62,7 +62,7 @@ class ResolveRules(Process):
                 "connection_string",
                 "Connection String",
                 abstract="Database connection string",
-                min_occurs=1,
+                min_occurs=0,
                 max_occurs=1,
                 default="",
                 data_type="string",
