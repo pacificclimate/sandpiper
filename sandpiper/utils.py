@@ -19,7 +19,7 @@ def update_connection(connection_string):
     environment variable. This method ensures that we check both options with
     priority given to the parameter.
     """
-    connection_string = os.environ.get("CONNECTION_STRING") if not connection_string
+    connection_string = connection_string if connection_string != "" else os.environ.get("CONNECTION_STRING")
 
     if not connection_string:
         raise ProcessError(f"No connection_string found. You must set the connection_string through the environment or as a parameter.")
