@@ -7,14 +7,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
 
 @pytest.mark.online
 @pytest.mark.parametrize(
-    (
-        "csv",
-        "date_range",
-        "region",
-        "geoserver",
-        "ensemble",
-        "thredds",
-    ),
+    ("csv", "date_range", "region", "geoserver", "ensemble", "thredds",),
     [
         (
             resource_filename("tests", "data/rules_small.csv"),
@@ -35,13 +28,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
     ],
 )
 def test_wps_resolve_rules(
-    mock_thredds_url_root,
-    csv,
-    date_range,
-    region,
-    geoserver,
-    ensemble,
-    thredds,
+    mock_thredds_url_root, csv, date_range, region, geoserver, ensemble, thredds,
 ):
     with open(csv, "r") as csv_file:
         datainputs = (
