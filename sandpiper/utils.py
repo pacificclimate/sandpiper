@@ -1,4 +1,6 @@
 import logging
+import os
+from pywps.app.exceptions import ProcessError
 
 
 logger = logging.getLogger("PYWPS")
