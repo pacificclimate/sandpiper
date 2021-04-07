@@ -9,7 +9,7 @@ from p2a_impacts.utils import get_region, REGIONS
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level, collect_args
 from wps_tools.error_handling import custom_process_error
-from sandpiper.utils import logger
+from sandpiper.utils import logger, update_connection
 
 
 class ResolveRules(Process):
@@ -62,9 +62,9 @@ class ResolveRules(Process):
                 "connection_string",
                 "Connection String",
                 abstract="Database connection string",
-                min_occurs=1,
+                min_occurs=0,
                 max_occurs=1,
-                default="postgres://ce_meta_ro@db3.pcic.uvic.ca/ce_meta_12f290b63791",
+                default="",
                 data_type="string",
             ),
             LiteralInput(
@@ -125,6 +125,8 @@ class ResolveRules(Process):
             thredds,
             loglevel,
         ) = [arg[0] for arg in collect_args(request, self.workdir).values()]
+
+        connection_string = update_connection(connection_string)
 
         log_handler(
             self,

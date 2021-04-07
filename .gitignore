@@ -5,5 +5,5 @@ venv/
 *.sqlite
 .ipynb_checkpoints/
 .Rhistory
-credentials.json
 docs/output-sanitize.cfg
+deployment.env

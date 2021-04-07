@@ -3,6 +3,8 @@ services:
   sandpiper-dev:
     image: pcic/sandpiper:latest
     container_name: sandpiper-dev
+    env_file:
+      - ./deployment.env
     environment:
       - PYWPS_CFG=/wps.cfg
     ports:
