@@ -7,7 +7,7 @@ from pywps.app.Common import Metadata
 from p2a_impacts.resolver import resolve_rules
 from p2a_impacts.utils import get_region, REGIONS
 from wps_tools.logging import log_handler
-from wps_tools.io import log_level, collect_args
+from wps_tools.io import log_level, collect_args, csv_input
 from wps_tools.error_handling import custom_process_error
 from sandpiper.utils import logger, update_connection
 
@@ -23,19 +23,7 @@ class ResolveRules(Process):
             "complete": 100,
         }
         inputs = [
-            ComplexInput(
-                'csv',
-                'CSV document',
-                abstract='A CSV document',
-                supported_formats=[Format('text/csv', extension='.csv'), FORMATS.TEXT]),
-            # LiteralInput(
-            #     "csv_content",
-            #     "CSV content",
-            #     abstract="Contents of the 'rules' CSV file",
-            #     min_occurs=1,
-            #     max_occurs=1,
-            #     data_type="string",
-            # ),
+            csv_input,
             LiteralInput(
                 "date_range",
                 "Date Range",
@@ -121,7 +109,7 @@ class ResolveRules(Process):
 
     def _handler(self, request, response):
         (
-            rules,
+            csv,
             date_range,
             region,
             geoserver,
@@ -129,7 +117,7 @@ class ResolveRules(Process):
             ensemble,
             thredds,
             loglevel,
-        ) = [arg[0] for arg in collect_args(request, self.workdir).values()]
+        ) = [arg[0] for arg in collect_args(request.inputs, self.workdir).values()]
 
         connection_string = update_connection(connection_string)
 
@@ -142,9 +130,17 @@ class ResolveRules(Process):
             process_step="start",
         )
 
-        with NamedTemporaryFile(mode="w+", suffix=".csv") as temp_rules:
-            temp_rules.write(rules)
-            temp_rules.seek(0)
+        csv.seek(0)
+        csv_content = csv.read()
+
+        try:
+            csv_content = csv_content.decode("utf-8")
+        except(UnicodeDecodeError, AttributeError):
+            pass
+
+        with NamedTemporaryFile(mode="w+", suffix=".csv") as temp_csv:
+            temp_csv.write(csv_content)
+            temp_csv.seek(0)
 
             log_handler(
                 self,
@@ -156,7 +152,7 @@ class ResolveRules(Process):
             )
             try:
                 resolved = resolve_rules(
-                    temp_rules.name,
+                    temp_csv.name,
                     date_range,
                     get_region(region, geoserver),
                     ensemble,
