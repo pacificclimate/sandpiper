@@ -18,10 +18,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
         ),
     ],
 )
-@pytest.mark.parametrize("thredds", [
-    True,
-    False
-])
+@pytest.mark.parametrize("thredds", [True, False])
 def test_wps_resolve_rules(
     mock_thredds_url_root, csv, date_range, region, geoserver, ensemble, thredds,
 ):

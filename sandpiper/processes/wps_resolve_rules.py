@@ -135,7 +135,7 @@ class ResolveRules(Process):
 
         try:
             csv_content = csv_content.decode("utf-8")
-        except(UnicodeDecodeError, AttributeError):
+        except (UnicodeDecodeError, AttributeError):
             pass
 
         with NamedTemporaryFile(mode="w+", suffix=".csv") as temp_csv:
