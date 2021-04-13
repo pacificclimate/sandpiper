@@ -69,7 +69,7 @@ class EvaluateRule(Process):
         )
 
     def _handler(self, request, response):
-        args = collect_args(request, self.workdir)
+        args = collect_args(request.inputs, self.workdir)
         rules, parse_tree_path, variables_path, loglevel = (
             args[key][0] if key != "rules" else args[key] for key in args.keys()
         )

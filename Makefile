@@ -19,7 +19,7 @@ SANITIZE_FILE := https://github.com/Ouranosinc/PAVICS-e2e-workflow-tests/raw/mas
 
 
 .PHONY: all
-all: apt install develop test-all clean-test credentials test-notebooks-prod
+all: apt install develop test-all clean-test test-notebooks-prod
 
 .PHONY: help
 help:
@@ -77,10 +77,6 @@ restart: venv stop start
 status: venv
 	@echo "Show status ..."
 	@-bash -c "${VENV}/bin/$(APP_NAME) status"
-
-.PHONY: credentials
-credentials:
-	test -f credentials.json || echo "{\n\t\"connection_string\": \"not_set\"\n}" > credentials.json
 
 .PHONY: clean
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
