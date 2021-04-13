@@ -1,5 +1,10 @@
 # Changes
 
+## 1.6.0
+*2021-04-13*
+
+* Update `csv` input handling
+
 ## 1.5.1
 *2021-03-29*
 
