@@ -69,7 +69,9 @@ class EvaluateRule(Process):
         )
 
     def _handler(self, request, response):
-        rules, parse_tree_path, variables_path, loglevel = [arg for arg in collect_args(request.inputs, self.workdir).values()]
+        rules, parse_tree_path, variables_path, loglevel = [
+            arg for arg in collect_args(request.inputs, self.workdir).values()
+        ]
 
         log_handler(
             self,
