@@ -117,7 +117,7 @@ class ResolveRules(Process):
             ensemble,
             thredds,
             loglevel,
-        ) = [arg[0] for arg in collect_args(request.inputs, self.workdir).values()]
+        ) = [arg for arg in collect_args(request.inputs, self.workdir).values()]
 
         connection_string = update_connection(connection_string)
 
