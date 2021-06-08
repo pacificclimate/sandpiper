@@ -1,4 +1,8 @@
 # Changes
+## 1.7.1
+*2021-06-08*
+
+* Clean up contents in `Dockerfile`
 
 ## 1.7.0
 *2021-05-20*

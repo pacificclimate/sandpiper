@@ -1,8 +1,6 @@
-# vim:set ft=dockerfile:
 FROM pcic/geospatial-python:gdal3
-MAINTAINER https://github.com/pacificclimate/sandpiper
-LABEL Description="sandpiper WPS" Vendor="pacificclimate" Version="1.7.0"
 
+LABEL Maintainer="https://github.com/pacificclimate/sandpiper" Description="sandpiper WPS" Vendor="pacificclimate" Version="1.7.1"
 ENV PIP_INDEX_URL="https://pypi.pacificclimate.org/simple/"
 ENV THREDDS_URL_ROOT="https://docker-dev03.pcic.uvic.ca/twitcher/ows/proxy/thredds/dodsC/datasets"
 
