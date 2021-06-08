@@ -3,8 +3,8 @@ services:
   sandpiper:
     image: ${SANDPIPER_IMAGE}
     container_name: sandpiper
-    env_file:
-      - ../../sandpiper/deployment.env
+    secrets:
+      - ce_meta_ro
     environment:
       - PYWPS_CFG=/wps.cfg
     ports:
@@ -23,3 +23,7 @@ services:
   proxy:
     volumes:
       - ../../sandpiper/pavics-component/sandpiper_canarie_api_monitoring.py:${CANARIE_MONITORING_EXTRA_CONF_DIR}/sandpiper_canarie_api_monitoring.py:ro
+
+secrets:
+  ce_meta_ro:
+    external: true
