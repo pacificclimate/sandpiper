@@ -4,6 +4,8 @@ services:
   sandpiper-dev:
     image: ${SANDPIPER_DEV_IMAGE}
     container_name: sandpiper-dev
+    env_file:
+      - ../../sandpiper/deployment.env
     environment:
       - PYWPS_CFG=/wps.cfg
     ports:
