@@ -1,4 +1,4 @@
-pywps>=4.2
+pywps>=4.5.0
 gdal==3.0.4
 jinja2
 click==7.1.2
