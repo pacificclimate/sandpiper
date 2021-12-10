@@ -21,6 +21,7 @@ def build_condition_input(conditions):
         [
             "(temp_djf_iamean_s100p_hist < 5)",
             "(temp_djf_iamean_s0p_hist < -6)",
+            "(temp_djf_iamean_s0p_hist < -6) %26%26 (temp_djf_iamean_s100p_hist > -6)",
         ]
     ],
 )
