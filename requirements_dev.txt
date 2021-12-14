@@ -1,4 +1,5 @@
 pytest>=6.0
+testing.postgresql
 flake8
 pytest-flake8
 ipython
