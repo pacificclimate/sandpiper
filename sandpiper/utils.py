@@ -29,7 +29,7 @@ def update_connection(connection_string):
 
     if not connection_string:
         raise ProcessError(
-            f"No connection_string found. You must set the connection_string through the environment or as a parameter."
+            "No connection_string found. You must set the connection_string through the environment or as a parameter."
         )
 
     return connection_string

@@ -41,7 +41,7 @@ def test_wps_evaluate_rule(rules, parse_tree, variables):
 
 
 @pytest.mark.parametrize(
-    ("rules", "parse_tree",), [("rule_snow", local_path("parse_tree.json"),),],
+    ("rules", "parse_tree",), [("rule_snow", local_path("parse_tree.json"))],
 )
 def test_file_err(rules, parse_tree):
     with NamedTemporaryFile(
