@@ -20,14 +20,23 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
 )
 @pytest.mark.parametrize("thredds", [True, False])
 def test_wps_resolve_rules(
-    mock_thredds_url_root, csv, date_range, region, geoserver, ensemble, thredds,
+    populatedb,
+    mock_thredds_url_root,
+    csv,
+    date_range,
+    region,
+    geoserver,
+    ensemble,
+    thredds,
 ):
+    connection_string = populatedb.get_bind().url
     with open(csv, "r") as csv_file:
         datainputs = (
             f"csv={csv_file.read()};"
             f"date_range={date_range};"
             f"region={region};"
             f"geoserver={geoserver};"
+            f"connection_string={connection_string};"
             f"ensemble={ensemble};"
             f"thredds={thredds};"
         )

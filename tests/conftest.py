@@ -4,6 +4,7 @@ from datetime import datetime
 from pkg_resources import resource_filename
 from dateutil.relativedelta import relativedelta
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 from modelmeta.v2 import (
     metadata,
@@ -42,14 +43,19 @@ def db_engine(db_uri):
     yield engine
 
 
-@pytest.fixture
-def populateddb(db_engine):
+@pytest.fixture()
+def db_session(db_engine):
+    sesh = sessionmaker(bind=db_engine)()
+    yield sesh
+    sesh.rollback()
+    sesh.close()
 
+
+@pytest.fixture()
+def populatedb(db_session):
     now = datetime.utcnow()
 
-    populateable_db = db_engine
-    sesh = populateable_db.session
-
+    sesh = db_session
     # Ensembles
 
     p2a_rules = Ensemble(name="p2a_rules", version=1.0, changes="", description="",)
@@ -229,4 +235,4 @@ def populateddb(db_engine):
     sesh.add_all(sesh.dirty)
 
     sesh.commit()
-    return populateable_db
+    yield sesh
