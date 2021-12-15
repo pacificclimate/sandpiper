@@ -32,7 +32,7 @@ def test_wps_resolve_rules(
     connection_string = str(populatedb.get_bind().url)
     connection_string = connection_string.replace(
         "@", "%2A"
-    )  # WPSTestClient query omits inputs with @ signs even with escape codes.
+    )  # WPSTestClient query omits inputs with @ signs even with escape codes. Temporarily replace with asterisk.
     datainputs = (
         f"csv={csv};"
         f"date_range={date_range};"
