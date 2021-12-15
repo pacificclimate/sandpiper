@@ -36,7 +36,7 @@ class ResolveRules(Process):
                 "region",
                 "BC Region",
                 abstract="Impacted region",
-                min_occurs=1,
+                min_occurs=0,
                 max_occurs=1,
                 allowed_values=[region for region in REGIONS.keys()],
                 default="bc",
@@ -46,7 +46,7 @@ class ResolveRules(Process):
                 "geoserver",
                 "Geoserver URL",
                 abstract="Geoserver URL",
-                min_occurs=1,
+                min_occurs=0,
                 max_occurs=1,
                 default="https://docker-dev03.pcic.uvic.ca/geoserver/bc_regions/ows",
                 data_type="string",
@@ -57,14 +57,13 @@ class ResolveRules(Process):
                 abstract="Database connection string",
                 min_occurs=0,
                 max_occurs=1,
-                default="",
                 data_type="string",
             ),
             LiteralInput(
                 "ensemble",
                 "Ensemble",
                 abstract="Ensemble name filter for data files",
-                min_occurs=1,
+                min_occurs=0,
                 max_occurs=1,
                 default="p2a_rules",
                 data_type="string",
@@ -119,6 +118,9 @@ class ResolveRules(Process):
             loglevel,
         ) = [arg for arg in collect_args(request.inputs, self.workdir).values()]
 
+        connection_string = connection_string.replace(
+            "*", "@"
+        )  # asterisk used for initial string from automated test to avoid removing input.
         connection_string = update_connection(connection_string)
 
         log_handler(

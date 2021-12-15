@@ -29,15 +29,18 @@ def test_wps_resolve_rules(
     ensemble,
     thredds,
 ):
-    connection_string = populatedb.get_bind().url
-    with open(csv, "r") as csv_file:
-        datainputs = (
-            f"csv={csv_file.read()};"
-            f"date_range={date_range};"
-            f"region={region};"
-            f"geoserver={geoserver};"
-            f"connection_string={connection_string};"
-            f"ensemble={ensemble};"
-            f"thredds={thredds};"
-        )
-        run_wps_process(ResolveRules(), datainputs)
+    connection_string = str(populatedb.get_bind().url)
+    connection_string = connection_string.replace(
+        "@", "%2A"
+    )  # WPSTestClient query omits inputs with @ signs even with escape codes.
+    datainputs = (
+        f"csv={csv};"
+        f"date_range={date_range};"
+        f"region={region};"
+        f"geoserver={geoserver};"
+        f"connection_string={connection_string};"
+        f"ensemble={ensemble};"
+        f"thredds={thredds};"
+    )
+    run_wps_process(ResolveRules(), datainputs)
+    populatedb.close()
