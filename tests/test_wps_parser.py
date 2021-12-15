@@ -14,14 +14,15 @@ def build_condition_input(conditions):
         return conditions_input
 
 
-# Any logical conditions with "=" do not work in this test for some unknown reason
+# Any logical conditions with "=" do not work in this test because they are omitted by the WPSTestClient's get request.
+# Using the "=" escape code does not resolve this.
 @pytest.mark.parametrize(
     ("conditions"),
     [
         [
             "(temp_djf_iamean_s100p_hist < 5)",
             "(temp_djf_iamean_s0p_hist < -6)",
-            "(temp_djf_iamean_s0p_hist < -6) %26%26 (temp_djf_iamean_s100p_hist > -6)",
+            "(temp_djf_iamean_s0p_hist < -6) %26%26 (temp_djf_iamean_s100p_hist > -6)",  # Escape "&" signs
         ]
     ],
 )
