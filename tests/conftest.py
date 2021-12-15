@@ -30,7 +30,7 @@ def mock_thredds_url_root(monkeypatch):
     )
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 def db_uri():
     with testing.postgresql.Postgresql() as pg:
         yield pg.url()
