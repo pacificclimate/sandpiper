@@ -20,7 +20,7 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
 )
 @pytest.mark.parametrize("thredds", [True, False])
 def test_wps_resolve_rules(
-    populatedb,
+    db_session,
     mock_thredds_url_root,
     csv,
     date_range,
@@ -29,7 +29,7 @@ def test_wps_resolve_rules(
     ensemble,
     thredds,
 ):
-    connection_string = str(populatedb.get_bind().url)
+    connection_string = str(db_session.get_bind().url)
     connection_string = connection_string.replace(
         "@", "%2A"
     )  # WPSTestClient query omits inputs with @ signs even with escape codes. Temporarily replace with asterisk.
@@ -43,4 +43,3 @@ def test_wps_resolve_rules(
         f"thredds={thredds};"
     )
     run_wps_process(ResolveRules(), datainputs)
-    populatedb.close()

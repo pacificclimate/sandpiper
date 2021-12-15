@@ -46,16 +46,8 @@ def db_engine(db_uri):
 @pytest.fixture()
 def db_session(db_engine):
     sesh = sessionmaker(bind=db_engine)()
-    yield sesh
-    sesh.rollback()
-    sesh.close()
-
-
-@pytest.fixture()
-def populatedb(db_session):
     now = datetime.utcnow()
 
-    sesh = db_session
     # Ensembles
 
     p2a_rules = Ensemble(name="p2a_rules", version=1.0, changes="", description="",)
@@ -236,3 +228,5 @@ def populatedb(db_session):
 
     sesh.commit()
     yield sesh
+    sesh.rollback()
+    sesh.close()
