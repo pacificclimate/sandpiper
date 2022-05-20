@@ -1,7 +1,7 @@
-pywps>=4.2
+pywps==4.4.5
 gdal==3.0.4
 jinja2
-click==7.1.2
+click>=8.0
 psutil
 p2a_impacts==0.4.0
 wps-tools==2.0.0
