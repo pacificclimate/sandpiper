@@ -3,6 +3,7 @@ gdal==3.0.4
 jinja2
 click>=8.0
 psutil
+pyproj==3.0.0
 p2a_impacts==0.4.0
 wps-tools==2.0.0
 ce==3.2.0
