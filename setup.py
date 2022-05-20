@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, "README.md")).read()
 CHANGES = open(os.path.join(here, "CHANGES.md")).read()
-REQUIRES_PYTHON = ">=3.5.0"
+REQUIRES_PYTHON = ">=3.7.0"
 
 about = {}
 with open(os.path.join(here, "sandpiper", "__version__.py"), "r") as f:
@@ -28,9 +28,8 @@ classifiers = [
     "Programming Language :: Python",
     "Natural Language :: English",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
     "Topic :: Scientific/Engineering :: Atmospheric Science",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
 ]
@@ -49,9 +48,18 @@ setup(
     license="GNU General Public License v3",
     keywords="wps pywps birdhouse sandpiper",
     packages=find_packages(),
-    package_data={"sandpiper": ["tests/data/*.nc"], "tests": ["data/*.nc"],},
+    package_data={
+        "sandpiper": ["tests/data/*.nc"],
+        "tests": ["data/*.nc"],
+    },
     include_package_data=True,
     install_requires=reqs,
-    extras_require={"dev": dev_reqs,},  # pip install ".[dev]"
-    entry_points={"console_scripts": ["sandpiper=sandpiper.cli:cli",]},
+    extras_require={
+        "dev": dev_reqs,
+    },  # pip install ".[dev]"
+    entry_points={
+        "console_scripts": [
+            "sandpiper=sandpiper.cli:cli",
+        ]
+    },
 )
