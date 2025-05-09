@@ -129,20 +129,20 @@ cmd = "poetry install --extras dev"
 help = "Install development dependencies using Poetry"
 
 [tool.poe.tasks.start]
-cmd = "poetry run osprey start -d"
-help = "Start the Osprey service in detached mode"
+cmd = "poetry run sandpiper start -d"
+help = "Start the Sandpiper service in detached mode"
 
 [tool.poe.tasks.stop]
-cmd = "poetry run osprey stop"
-help = "Stop the Osprey service"
+cmd = "poetry run sandpiper stop"
+help = "Stop the Sandpiper service"
 
 [tool.poe.tasks.restart]
 sequence = ["stop", "start"]
-help = "Restart the Osprey service"
+help = "Restart the Sandpiper service"
 
 [tool.poe.tasks.status]
-cmd = "poetry run osprey status"
-help = "Show the status of the Osprey service"
+cmd = "poetry run sandpiper status"
+help = "Show the status of the Sandpiper service"
 
 [tool.poe.tasks.dist]
 cmd = "poetry build"
