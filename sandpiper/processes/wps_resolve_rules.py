@@ -48,7 +48,7 @@ class ResolveRules(Process):
                 abstract="Geoserver URL",
                 min_occurs=1,
                 max_occurs=1,
-                default="https://docker-dev03.pcic.uvic.ca/geoserver/bc_regions/ows",
+                default="https://beehive.pacificclimate.org/plan2adapt/bc_regions/ows",
                 data_type="string",
             ),
             LiteralInput(

@@ -1,5 +1,5 @@
 import pytest
-from pkg_resources import resource_filename
+from importlib.resources import files
 
 from wps_tools.testing import run_wps_process
 from sandpiper.processes.wps_resolve_rules import ResolveRules
@@ -16,10 +16,10 @@ from sandpiper.processes.wps_resolve_rules import ResolveRules
     ),
     [
         (
-            resource_filename("tests", "data/rules_small.csv"),
+            str((files("tests") / "data/rules_small.csv").resolve()),
             "2050",
             "vancouver_island",
-            "http://docker-dev01.pcic.uvic.ca:30123/geoserver/bc_regions/ows",
+            "https://beehive.pacificclimate.org/plan2adapt/bc_regions/ows",
             "p2a_rules",
         ),
     ],
