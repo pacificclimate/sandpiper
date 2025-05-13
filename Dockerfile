@@ -1,4 +1,4 @@
-FROM pcic/geospatial-python:3.4.0
+FROM pcic/geospatial-python:py-sprint-25q1
 
 LABEL Maintainer="https://github.com/pacificclimate/sandpiper" \
   Description="sandpiper WPS" \
@@ -8,17 +8,15 @@ ENV PIP_INDEX_URL="https://pypi.pacificclimate.org/simple/"
 ENV THREDDS_URL_ROOT="https://marble-dev01.pcic.uvic.ca/twitcher/ows/proxy/thredds/dodsC/datasets"
 
 # Update system
-RUN apk upgrade --update && \
-  apk add \
+RUN apt-get update && apt-get upgrade -y && \
+  apt-get install -y \
   libxml2-dev \
   libxslt-dev \
-  linux-headers\
-  curl
+  linux-headers
 
 WORKDIR /tmp
 COPY pyproject.toml poetry.lock* ./
 
-RUN curl -sSL https://install.python-poetry.org | python3
 RUN pip install --upgrade pip && \
   pip install poetry && \
   poetry config virtualenvs.create false

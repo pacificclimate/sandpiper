@@ -586,14 +586,14 @@ reference = "pcic"
 
 [[package]]
 name = "ce"
-version = "3.2.0"
+version = "3.6.1"
 description = "PCIC's Climate Explorer (CE)"
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "ce-3.2.0-py3-none-any.whl", hash = "sha256:14a63289f32e0fa8e3df62777a1191405ea09e0291d7e88e1656fe12215f4598"},
-    {file = "ce-3.2.0.tar.gz", hash = "sha256:a8f91a8e882829495d61a1b977876ae50fe572d113f4e18191171d3ea548e17b"},
+    {file = "ce-3.6.1-py3-none-any.whl", hash = "sha256:7ef69d14fca788b28c5b156272386a27ff8dfcd6b9d2a8137ca160dcc236fee3"},
+    {file = "ce-3.6.1.tar.gz", hash = "sha256:f8eabb878e027238c2ab2690f2cff61f0f47c324a1dae467f5f4490ad4f462a5"},
 ]
 
 [package.dependencies]
@@ -1606,13 +1606,13 @@ reference = "pcic"
 
 [[package]]
 name = "gdal"
-version = "3.6.4"
+version = "3.4.1"
 description = "GDAL: Geospatial Data Abstraction Library"
 optional = false
 python-versions = ">=3.6.0"
 groups = ["main"]
 files = [
-    {file = "GDAL-3.6.4.tar.gz", hash = "sha256:c07d548cbd6544e8a51651fc1e487ca4b39e8fe6b5b3c886082d87f0e49e8313"},
+    {file = "GDAL-3.4.1.tar.gz", hash = "sha256:b19e8143bc2c0d3e222789a465d82b6874236eb78801aec608bf5c8c44d20fcf"},
 ]
 
 [package.extras]
@@ -6338,4 +6338,4 @@ dev = ["beautifulsoup4", "birdhouse-birdy", "black", "bumpversion", "cruft", "fl
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10, <4.0"
-content-hash = "77999bf044e7fdc80b54f0546025b00702b525e10e264779e74ab0e595abe6a8"
+content-hash = "a48d896cb81dc7087b8e82debe96d8ad83bc2a013e3e6b9f3a431a73dfab62b2"
