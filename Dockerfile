@@ -11,8 +11,7 @@ ENV THREDDS_URL_ROOT="https://marble-dev01.pcic.uvic.ca/twitcher/ows/proxy/thred
 RUN apt-get update && apt-get upgrade -y && \
   apt-get install -y \
   libxml2-dev \
-  libxslt-dev \
-  linux-headers
+  libxslt-dev
 
 WORKDIR /tmp
 COPY pyproject.toml poetry.lock* ./

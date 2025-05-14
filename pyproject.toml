@@ -43,7 +43,12 @@ dependencies = [
     "p2a_impacts==0.4.0",
     "wps-tools==2.1.3",
     "ce==3.6.1",
+    "modelmeta==1.0.1",
+    "cf_cell_methods==0.1.0",
     "gunicorn==20.1.0",
+    "pint (>=0.24.4,<0.25.0)",
+    "shapely==2",
+    "numpy<2",
 ]
 
 [project.optional-dependencies]
