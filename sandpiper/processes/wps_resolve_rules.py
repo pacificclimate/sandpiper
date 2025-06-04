@@ -5,7 +5,7 @@ from pywps import Process, LiteralInput, ComplexOutput, FORMATS
 from pywps.app.Common import Metadata
 
 from p2a_impacts.resolver import resolve_rules
-from p2a_impacts.utils import get_region, REGIONS
+from p2a_impacts.utils import get_region, REGIONS, create_session
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level, collect_args, csv_input
 from wps_tools.error_handling import custom_process_error
@@ -156,7 +156,7 @@ class ResolveRules(Process):
                     date_range,
                     get_region(region, geoserver),
                     ensemble,
-                    connection_string,
+                    create_session(connection_string),
                     thredds,
                     loglevel,
                 )
