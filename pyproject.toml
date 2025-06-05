@@ -44,7 +44,7 @@ dependencies = [
     "wps-tools @ git+https://github.com/pacificclimate/wps-tools.git@py-sprint-25q1",
     "ce @ git+https://github.com/pacificclimate/climate-explorer-backend.git@py-sprint-25q1",
     "modelmeta @ git+https://github.com/pacificclimate/modelmeta.git@py-sprint-25q1",
-    "cf_cell_methods==0.1.0",
+    "cf_cell_methods @ git+https://github.com/pacificclimate/cf-cell-methods.git@i7-handle-parsing-errors",
     "gunicorn>=20.1.0",
     "pint (>=0.24.4,<0.25.0)",
     "shapely>2.0,<3",
