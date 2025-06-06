@@ -28,7 +28,7 @@ class ResolveRules(Process):
                 "date_range",
                 "Date Range",
                 abstract="30 year period for data",
-                allowed_values=["2020", "2050", "2080"],
+                allowed_values=["2030", "2050", "2080"],
                 default="2080",
                 data_type="string",
             ),
@@ -66,7 +66,7 @@ class ResolveRules(Process):
                 abstract="Ensemble name filter for data files",
                 min_occurs=1,
                 max_occurs=1,
-                default="p2a_rules",
+                default="p2a_rules_cmip6_mbcn",
                 data_type="string",
             ),
             LiteralInput(
