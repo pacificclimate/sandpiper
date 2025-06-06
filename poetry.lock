@@ -3462,7 +3462,7 @@ develop = false
 
 [package.dependencies]
 ce = {git = "https://github.com/pacificclimate/climate-explorer-backend.git", rev = "py-sprint-25q1"}
-cf_cell_methods = {git = "https://github.com/pacificclimate/cf-cell-methods.git", rev = "i7-handle-parsing-errors"}
+cf_cell_methods = ">=0.1.0,<1.0.0"
 contexttimer = ">=0.3.3,<1.0.0"
 GDAL = ">=3.3.0,<3.4"
 setuptools = ">=79.0.1,<80.0.0"
@@ -3476,7 +3476,7 @@ test = ["black (>=25.1.0,<26.0.0)", "mock (>=5.2.0,<6.0.0)", "pre_commit (>=4.2.
 type = "git"
 url = "https://github.com/pacificclimate//p2a-rule-engine.git"
 reference = "py-sprint-25q1"
-resolved_reference = "9a076a6731842ca9b73c0dd3fb725ee0d63a1992"
+resolved_reference = "8bc114c2eb30362b1bf854dd5b5395a6b46f3392"
 
 [[package]]
 name = "packaging"
