@@ -1,4 +1,4 @@
-FROM pcic/geospatial-python:py-sprint-25q1
+FROM pcic/geospatial-python:3.8.4
 
 LABEL Maintainer="https://github.com/pacificclimate/sandpiper" \
   Description="sandpiper WPS" \
