@@ -27,7 +27,6 @@ RUN apt-get update && \
 COPY . .
 
 RUN poetry config virtualenvs.in-project true && \
-  poetry lock && \
   poetry install
 
 # Start WPS service on port 5000 on 0.0.0.0
