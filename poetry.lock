@@ -555,13 +555,15 @@ reference = "pcic"
 
 [[package]]
 name = "ce"
-version = "3.6.5"
+version = "3.6.7"
 description = "PCIC's Climate Explorer (CE)"
 optional = false
 python-versions = ">=3.11,<4"
 groups = ["main"]
-files = []
-develop = false
+files = [
+    {file = "ce-3.6.7-py3-none-any.whl", hash = "sha256:c13abb357af46025dd8ba44c49ea8c41d7e15961da390b74ba794faf9268213f"},
+    {file = "ce-3.6.7.tar.gz", hash = "sha256:82520e49be8d171689e74827077c6569235b4237e96283bfdd7c72856ecbb747"},
+]
 
 [package.dependencies]
 cf-cell-methods = "0.1.0"
@@ -571,7 +573,7 @@ Flask-Cors = "*"
 Flask-SQLAlchemy = ">=3.0.5,<4"
 GDAL = ">=3.3.0,<3.4"
 gunicorn = "23.0.0"
-modelmeta = {git = "https://github.com/pacificclimate/modelmeta.git", rev = "py-sprint-25q1"}
+modelmeta = "2.0.1"
 nchelpers = {git = "https://github.com/pacificclimate/nchelpers.git", rev = "py-sprint-25q1"}
 numpy = "<2"
 Pint = "<1"
@@ -581,10 +583,9 @@ shapely = ">2.0,<3"
 SQLAlchemy = ">=2.0.40,<3.0.0"
 
 [package.source]
-type = "git"
-url = "https://github.com/pacificclimate/climate-explorer-backend.git"
-reference = "py-sprint-25q1"
-resolved_reference = "36b38596b557ad7cd6530a054a2d382677fd6de1"
+type = "legacy"
+url = "https://pypi.pacificclimate.org/simple"
+reference = "pcic"
 
 [[package]]
 name = "certifi"
@@ -2933,13 +2934,15 @@ reference = "pcic"
 
 [[package]]
 name = "modelmeta"
-version = "1.0.2"
+version = "2.0.1"
 description = "An ORM representation of the model meta database"
 optional = false
 python-versions = ">=3.10,<4.0"
 groups = ["main"]
-files = []
-develop = false
+files = [
+    {file = "modelmeta-2.0.1-py3-none-any.whl", hash = "sha256:0622b55f992a56a56b59d9919e97327896e2c0cab772951d5620e2623e7e5749"},
+    {file = "modelmeta-2.0.1.tar.gz", hash = "sha256:26fdb46ed4e26b6ce1fb9149e3db07a40a4c00448e09b5f5841eba27d3ec5be8"},
+]
 
 [package.dependencies]
 alembic = ">=1.15.2,<2.0.0"
@@ -2951,13 +2954,12 @@ sqlalchemy = ">=2.0.40,<3.0.0"
 
 [package.extras]
 poe = ["poethepoet (==0.34.0)"]
-test = ["alembic-verify (>=0.1.4,<0.2.0)", "lxml (==5.4.0)", "pytest (==8.3.5)", "sqlalchemy-diff (>=0.1.5,<0.2.0)", "sqlparse (==0.5.3)", "testing-postgresql (==1.3.0)"]
+test = ["alembic-verify (>=0.1.4,<0.2.0)", "black (>=25.1.0,<26.0.0)", "lxml (==5.4.0)", "pytest (==8.3.5)", "sqlalchemy-diff (>=0.1.5,<0.2.0)", "sqlparse (==0.5.3)", "testing-postgresql (==1.3.0)"]
 
 [package.source]
-type = "git"
-url = "https://github.com/pacificclimate/modelmeta.git"
-reference = "py-sprint-25q1"
-resolved_reference = "4fe32d1f706db97880af556a6295d36bfe88a341"
+type = "legacy"
+url = "https://pypi.pacificclimate.org/simple"
+reference = "pcic"
 
 [[package]]
 name = "mypy-extensions"
@@ -3455,13 +3457,13 @@ name = "p2a-impacts"
 version = "0.4.0"
 description = "Climate impacts engine for Plan2Adapt.ca"
 optional = false
-python-versions = ">=3.10, <4"
+python-versions = ">=3.11, <4"
 groups = ["main"]
 files = []
 develop = false
 
 [package.dependencies]
-ce = {git = "https://github.com/pacificclimate/climate-explorer-backend.git", rev = "py-sprint-25q1"}
+ce = ">=3.6.6,<4.0.0"
 cf_cell_methods = ">=0.1.0,<1.0.0"
 contexttimer = ">=0.3.3,<1.0.0"
 GDAL = ">=3.3.0,<3.4"
@@ -3476,7 +3478,7 @@ test = ["black (>=25.1.0,<26.0.0)", "mock (>=5.2.0,<6.0.0)", "pre_commit (>=4.2.
 type = "git"
 url = "https://github.com/pacificclimate//p2a-rule-engine.git"
 reference = "py-sprint-25q1"
-resolved_reference = "7436761d9e168c4cda2aa680438c6de91cbd5a94"
+resolved_reference = "ea9afdcc6fb68b87443c85385208369dfcb2d21d"
 
 [[package]]
 name = "packaging"
@@ -5628,13 +5630,15 @@ reference = "pcic"
 
 [[package]]
 name = "wps-tools"
-version = "2.1.3"
+version = "2.1.4"
 description = "A collection of modules used to help create wps processes"
 optional = false
 python-versions = ">=3.10,<=3.14"
 groups = ["main"]
-files = []
-develop = false
+files = [
+    {file = "wps_tools-2.1.4-py3-none-any.whl", hash = "sha256:86f37128d78ee3eae02837be01eb8f567d89301a6733443ae78c38d859e693de"},
+    {file = "wps_tools-2.1.4.tar.gz", hash = "sha256:c71be69137c7ee5b55c4acf91c89fa5604c34daf75b07cbb28c70dac9ca993f3"},
+]
 
 [package.dependencies]
 beautifulsoup4 = ">=4.13.4,<5.0.0"
@@ -5648,10 +5652,9 @@ r = ["rpy2 (==3.3.6)"]
 test = ["black (>=25.1.0,<26.0.0)", "pytest (>=8.3.5,<9.0.0)"]
 
 [package.source]
-type = "git"
-url = "https://github.com/pacificclimate/wps-tools.git"
-reference = "py-sprint-25q1"
-resolved_reference = "26c9a5e171ff40d496b16afd6571a4f0793d7900"
+type = "legacy"
+url = "https://pypi.pacificclimate.org/simple"
+reference = "pcic"
 
 [[package]]
 name = "wrapt"
@@ -5780,4 +5783,4 @@ dev = ["beautifulsoup4", "beautifulsoup4", "birdhouse_birdy", "black", "bumpvers
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11, <=3.14"
-content-hash = "e9f3197a6501ec73f3c3e0b0d06ec09a4c77f061452e2d68ff8cfd3792418cfc"
+content-hash = "3a7a9d1e0aafce3be4d83b9e019196d554345fe8f261a514ebb52fb9216db58b"
