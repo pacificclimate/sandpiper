@@ -3,7 +3,7 @@ FROM pcic/geospatial-python:3.8.4
 LABEL Maintainer="https://github.com/pacificclimate/sandpiper" \
   Description="sandpiper WPS" \
   Vendor="pacificclimate" \
-  Version="1.7.1"
+  Version="1.8.0"
 ENV PIP_INDEX_URL="https://pypi.pacificclimate.org/simple/"
 ENV THREDDS_URL_ROOT="https://marble-dev01.pcic.uvic.ca/twitcher/ows/proxy/thredds/dodsC/datasets"
 

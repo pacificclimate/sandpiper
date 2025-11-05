@@ -4,9 +4,9 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "sandpiper"
-version = "1.7.1"
+version = "1.8.0"
 description = "A Web Processing Service for the Plan2Adapt Rule Engine."
-authors = [{ name = "Nikola Rados" }]
+authors = [{ name = "Nikola Rados" }, { name = "Quintin Sparks", email = "quintins@uvic.ca"}]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
