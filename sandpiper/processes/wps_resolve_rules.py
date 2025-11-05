@@ -5,7 +5,7 @@ from pywps import Process, LiteralInput, ComplexOutput, FORMATS
 from pywps.app.Common import Metadata
 
 from p2a_impacts.resolver import resolve_rules
-from p2a_impacts.utils import get_region, REGIONS
+from p2a_impacts.utils import get_region, REGIONS, create_session
 from wps_tools.logging import log_handler
 from wps_tools.io import log_level, collect_args, csv_input
 from wps_tools.error_handling import custom_process_error
@@ -28,7 +28,7 @@ class ResolveRules(Process):
                 "date_range",
                 "Date Range",
                 abstract="30 year period for data",
-                allowed_values=["2020", "2050", "2080"],
+                allowed_values=["2030", "2050", "2080"],
                 default="2080",
                 data_type="string",
             ),
@@ -48,7 +48,7 @@ class ResolveRules(Process):
                 abstract="Geoserver URL",
                 min_occurs=1,
                 max_occurs=1,
-                default="https://docker-dev03.pcic.uvic.ca/geoserver/bc_regions/ows",
+                default="https://beehive.pacificclimate.org/plan2adapt/bc_regions/ows",
                 data_type="string",
             ),
             LiteralInput(
@@ -66,7 +66,7 @@ class ResolveRules(Process):
                 abstract="Ensemble name filter for data files",
                 min_occurs=1,
                 max_occurs=1,
-                default="p2a_rules",
+                default="p2a_rules_cmip6_mbcn",
                 data_type="string",
             ),
             LiteralInput(
@@ -156,7 +156,7 @@ class ResolveRules(Process):
                     date_range,
                     get_region(region, geoserver),
                     ensemble,
-                    connection_string,
+                    create_session(connection_string),
                     thredds,
                     loglevel,
                 )

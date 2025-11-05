@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>wps_evaluate_rules_demo</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>test_wps_resolve_rules_errors</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7511,17 +7511,17 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fddfff93">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Evaluate-Rules">Evaluate Rules<a class="anchor-link" href="#Evaluate-Rules">¶</a></h2><p>Takes 2 json files - parse tree dictionary and variable dictionary - and a rule string. Returns a truth value.</p>
+<h2 id="Test-for-wps_resolve_rules-ProcessErrors">Test for wps_resolve_rules ProcessErrors<a class="anchor-link" href="#Test-for-wps_resolve_rules-ProcessErrors">¶</a></h2><p>The usual test <code>run_wps_process</code> takes the default input value when the given value is invalid, and since every input in <code>wps_resolve_rules</code> has a default, the test always passes. Running a live instance of the process here returns the expected errors to test against.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=74f92779">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7530,29 +7530,43 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">birdy</span><span class="w"> </span><span class="kn">import</span> <span class="n">WPSClient</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">wps_tools.testing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_target_url</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">importlib.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">files</span>
-
-<span class="c1"># Ensure we are in the working directory with access to the data</span>
-<span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span> <span class="o">!=</span> <span class="s2">"sandpiper"</span><span class="p">:</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=223b4190">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span> <span class="o">!=</span> <span class="s2">"sandpiper"</span><span class="p">:</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">'../'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=221e60e0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># NBVAL_IGNORE_OUTPUT</span>
 <span class="n">url</span> <span class="o">=</span> <span class="n">get_target_url</span><span class="p">(</span><span class="s2">"sandpiper"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Using sandpiper on </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">sandpiper</span> <span class="o">=</span> <span class="n">WPSClient</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7571,41 +7585,31 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=fc5bc8b6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">sandpiper</span> <span class="o">=</span> <span class="n">WPSClient</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>The list of available processes can be diplayed using the <code>?</code> command (ex. <code>bird?</code>). Furthermore, help for individual processes can be diplayed using the same command (ex. <code>bird.process?</code>).</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># NBVAL_IGNORE_OUTPUT</span>
-sandpiper.evaluate_rule<span class="o">?</span>
+<span class="n">csv</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">files</span><span class="p">(</span><span class="s2">"tests"</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"data/samples/rules_small.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()),</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">sandpiper</span><span class="o">.</span><span class="n">resolve_rules</span><span class="p">(</span>
+            <span class="n">csv_content</span><span class="o">=</span><span class="n">csv_file</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
+            <span class="n">geoserver</span><span class="o">=</span><span class="s2">"https://beehive.pacificclimate.org/plan2adapt/bc_regions/ows"</span><span class="p">,</span>
+            <span class="n">connection_string</span><span class="o">=</span><span class="s2">"bad_connection_string"</span>
+        <span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">sandpiper</span><span class="o">.</span><span class="n">resolve_rules</span><span class="p">(</span>
+            <span class="n">csv_content</span><span class="o">=</span><span class="n">csv_file</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> 
+            <span class="n">geoserver</span><span class="o">=</span><span class="s2">"bad_geoserver"</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -7618,51 +7622,14 @@ sandpiper.evaluate_rule<span class="o">?</span>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre><span class="ansi-red-fg">Signature:</span>
-sandpiper<span class="ansi-blue-fg">.</span>evaluate_rule<span class="ansi-blue-fg">(</span>
-    rules<span class="ansi-blue-fg">,</span>
-    parse_tree<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span>
-    variables<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span>
-    loglevel<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">'INFO'</span><span class="ansi-blue-fg">,</span>
-    output_formats<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span>
-<span class="ansi-blue-fg">)</span>
-<span class="ansi-red-fg">Docstring:</span>
-Evaluate parse trees to determine truth value of a rule
-
-Parameters
-----------
-rules : string
-    Rule expressions
-parse_tree : ComplexData:mimetype:`application/json`
-    File path to dictionary used for rule getter function
-variables : ComplexData:mimetype:`application/json`
-    File path to dictionary used for variables
-loglevel : {'CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'NOTSET'}string
-    Logging level
-
-Returns
--------
-json : ComplexData:mimetype:`application/json`
-    JSON file
-<span class="ansi-red-fg">File:</span>      ~/code/birds/sandpiper/&lt;/tmp/sandpiper-venv/lib/python3.8/site-packages/birdy/client/base.py-2&gt;
-<span class="ansi-red-fg">Type:</span>      method
+<pre> owslib.wps.WPSException : {'code': 'NoApplicableCode', 'locator': 'None', 'text': 'Process error: ArgumentError: Could not parse rfc1738 URL from string bad_connection_string'}
+ owslib.wps.WPSException : {'code': 'NoApplicableCode', 'locator': 'None', 'text': 'Process error: MissingSchema: Invalid URL bad_geoserver: No schema supplied. Perhaps you meant http://bad_geoserver?'}
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>For the process, pass the rule and the file paths for the 2 json files</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c8687e84">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7670,68 +7637,7 @@ json : ComplexData:mimetype:`application/json`
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Evaluate truth value of expression 1</span>
-<span class="n">rules</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'rule_snow'</span><span class="p">,</span> <span class="s1">'rule_rain'</span><span class="p">,</span> <span class="s1">'rule_hybrid'</span><span class="p">]</span>
-<span class="n">parse_tree</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">files</span><span class="p">(</span><span class="s2">"tests"</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"data/parse_tree.json"</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()),</span>
-<span class="n">variables</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">files</span><span class="p">(</span><span class="s2">"tests"</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"data/collected_variables.json"</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()),</span>  
-<span class="n">output</span> <span class="o">=</span> <span class="n">sandpiper</span><span class="o">.</span><span class="n">evaluate_rule</span><span class="p">(</span>
-    <span class="n">rules</span><span class="o">=</span><span class="n">rules</span><span class="p">,</span>
-    <span class="n">parse_tree</span><span class="o">=</span><span class="n">parse_tree</span><span class="p">,</span>
-    <span class="n">variables</span><span class="o">=</span><span class="n">variables</span>
-<span class="p">)</span>
-<span class="c1"># Access the json contents as a dictionary by setting asobj=True</span>
-<span class="n">truth_values</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">asobj</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Evaluate truth value of one expression</span>
-<span class="n">rule</span> <span class="o">=</span> <span class="s1">'rule_hybrid'</span>  
-<span class="n">output</span> <span class="o">=</span> <span class="n">sandpiper</span><span class="o">.</span><span class="n">evaluate_rule</span><span class="p">(</span>
-    <span class="n">rules</span><span class="o">=</span><span class="n">rule</span><span class="p">,</span>
-    <span class="n">parse_tree</span><span class="o">=</span><span class="n">parse_tree</span><span class="p">,</span>
-    <span class="n">variables</span><span class="o">=</span><span class="n">variables</span>
-<span class="p">)</span>
-<span class="n">hybrid_truth_values</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">asobj</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Now that we've run the process, we check that the output is what we expect.</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Test expected output</span>
-<span class="n">expected_output</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">'rule_snow'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">'rule_rain'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'rule_hybrid'</span><span class="p">:</span> <span class="kc">True</span>
-<span class="p">}</span>
-<span class="k">assert</span> <span class="n">truth_values</span> <span class="o">==</span> <span class="n">expected_output</span>
-<span class="k">assert</span> <span class="n">hybrid_truth_values</span><span class="p">[</span><span class="s2">"rule_hybrid"</span><span class="p">]</span> <span class="o">==</span> <span class="n">expected_output</span><span class="p">[</span><span class="s2">"rule_hybrid"</span><span class="p">]</span>
+<div class="highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 </div>
 </div>
