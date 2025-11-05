@@ -3454,16 +3454,18 @@ reference = "pcic"
 
 [[package]]
 name = "p2a-impacts"
-version = "0.4.0"
+version = "0.5.0"
 description = "Climate impacts engine for Plan2Adapt.ca"
 optional = false
 python-versions = ">=3.11, <4"
 groups = ["main"]
-files = []
-develop = false
+files = [
+    {file = "p2a_impacts-0.5.0-py3-none-any.whl", hash = "sha256:e6ec842a979037b57fd011d8cebace2d89715df4c94a84fed4726bc355a6ef96"},
+    {file = "p2a_impacts-0.5.0.tar.gz", hash = "sha256:70b010e1c481805c564cb76cc5f5bbc55efd6a8661b1d4979d29660fdeb238f0"},
+]
 
 [package.dependencies]
-ce = ">=3.6.6,<4.0.0"
+ce = ">=3.6.7,<4.0.0"
 cf_cell_methods = ">=0.1.0,<1.0.0"
 contexttimer = ">=0.3.3,<1.0.0"
 GDAL = ">=3.3.0,<3.4"
@@ -3472,13 +3474,12 @@ shapely = ">=2.1.1,<3.0.0"
 sly = ">=0.5,<1.0.0"
 
 [package.extras]
-test = ["black (>=25.1.0,<26.0.0)", "mock (>=5.2.0,<6.0.0)", "pre_commit (>=4.2.0,<5.0.0)", "pytest (>=8.3.5,<9.0.0)", "pytest_cov (>=6.1.1,<7.0.0)", "requests_mock (>=1.12.1,<2.0.0)"]
+test = ["black (>=25.1.0,<26.0.0)", "mock (>=5.2.0,<6.0.0)", "pre_commit (>=4.2.0,<5.0.0)", "pytest (>=8.3.5,<9.0.0)", "pytest-socket (>=0.7.0,<1.0.0)", "pytest_cov (>=6.1.1,<7.0.0)", "requests_mock (>=1.12.1,<2.0.0)"]
 
 [package.source]
-type = "git"
-url = "https://github.com/pacificclimate//p2a-rule-engine.git"
-reference = "py-sprint-25q1"
-resolved_reference = "ea9afdcc6fb68b87443c85385208369dfcb2d21d"
+type = "legacy"
+url = "https://pypi.pacificclimate.org/simple"
+reference = "pcic"
 
 [[package]]
 name = "packaging"
@@ -5783,4 +5784,4 @@ dev = ["beautifulsoup4", "beautifulsoup4", "birdhouse_birdy", "black", "bumpvers
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11, <=3.14"
-content-hash = "3a7a9d1e0aafce3be4d83b9e019196d554345fe8f261a514ebb52fb9216db58b"
+content-hash = "1e632882fc31a83a6d6139a856251f9055cb16bd43602e2ccfde1d0d73c76111"
